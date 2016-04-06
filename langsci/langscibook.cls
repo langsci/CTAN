@@ -9,9 +9,33 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{langscibook}[2016/01/26 Language Science Press]
+\ProvidesClass{langsci/langscibook}[2016/01/26 Language Science Press]
 
-%% Default values:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%     Paths
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\fontpath}{} 
+\newcommand{\logopath}{}
+\newcommand{\seriesinfopath}{}
+\newcommand{\bstpath}{}
+\newcommand{\stylepath}{}
+\newcommand{\bertholdfonts}{}	
+% \renewcommand{\fontpath}{./langsci/fonts/} 
+% \renewcommand{\logopath}{./langsci/graphics/}
+% \renewcommand{\seriesinfopath}{./langsci/seriesinfo/}
+% \renewcommand{\bstpath}{./langsci/bst/}
+% \renewcommand{\stylepath}{./langsci/styles/}
+% \renewcommand{\bertholdfonts}{_B}	
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%     Default values
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ 
 \usepackage{xspace}
 \newcommand{\lsp}{Language Science Press\xspace}
 \newcommand{\lsSeriesNumber}{??}
@@ -131,8 +155,8 @@
 \usepackage{tikz} % Needed for covers and advert page
 	\usetikzlibrary{positioning}
 	\usetikzlibrary{calc}
-
 	
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 %      Output types (moved from below)
@@ -233,15 +257,15 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \usepackage{ifxetex}
-\ifxetex\else\ClassError{langscibook}{Please use XeLaTeX!}{}\fi	
+\ifxetex\else\ClassError{langsci/langscibook}{Please use XeLaTeX!}{}\fi	
 \usepackage{amssymb} % has to be loaded before other stuff
 % \usepackage{dtklogos}\newcommand{\xelatex}{\XeLaTeX\xspace}	% the XeLaTeX symbol
 
 %\usepackage{fontspec}	% already loaded by XeLaTeX
 \PassOptionsToPackage{no-math}{fontspec} % must appear before metalogo or any fontspec stuff; deactivates fontspec's math settings, which is necessary to let newtxmath do the job 
 \usepackage{metalogo}\newcommand{\xelatex}{\XeLaTeX\xspace}
-\newcommand{\fontpath}{./}
-
+\usepackage{dejavu}
+\usepackage{libertine}
 \setsansfont[
 	%Ligatures={TeX,Common},		% not supported by ttf
 	Scale=MatchLowercase,
@@ -252,7 +276,8 @@
 	]{Arimo_B.ttf}
 		
 \setmonofont[
-	Ligatures={TeX},Scale=MatchLowercase,Path=\fontpath,
+	Ligatures={TeX},Scale=MatchLowercase,
+% 	Path=\fontpath,
 	BoldFont = DejaVuSansMono-Bold.ttf ,
 	SlantedFont = DejaVuSansMono-Oblique.ttf ,				
 	BoldSlantedFont = DejaVuSansMono-BoldOblique.ttf 		
@@ -263,15 +288,15 @@
         Path=\fontpath,
         PunctuationSpace=0,
         Numbers={Proportional},
-        BoldFont = LinLibertine_RZ_B.otf ,
-        ItalicFont = LinLibertine_RI_B.otf ,
-        BoldItalicFont = LinLibertine_RZI_B.otf,
-        BoldSlantedFont = LinLibertine_RZ_B.otf,
-        SlantedFont    = LinLibertine_R_B.otf,
+        BoldFont = LinLibertine_RZ\bertholdfonts .otf ,
+        ItalicFont = LinLibertine_RI\bertholdfonts .otf ,
+        BoldItalicFont = LinLibertine_RZI\bertholdfonts .otf,
+        BoldSlantedFont = LinLibertine_RZ\bertholdfonts .otf,
+        SlantedFont    = LinLibertine_R\bertholdfonts .otf,
         SlantedFeatures = {FakeSlant=0.25},
         BoldSlantedFeatures = {FakeSlant=0.25},
         SmallCapsFeatures = {FakeSlant=0},
-        ]{LinLibertine_R_B.otf}		
+        ]{LinLibertine_R\bertholdfonts .otf}		
 
 \iflsNewtxmath							% some users have problems when installing newtxmath
 	\usepackage[libertine]{newtxmath}
@@ -317,7 +342,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \usepackage{xcolor}
-\input{series.def} % \lsSeriesColor, \lsSeriesTitle, \lsISSN and colors are defined here
+\input{\seriesinfopath series.def} % \lsSeriesColor, \lsSeriesTitle, \lsISSN and colors are defined here
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -437,12 +462,12 @@ al desirabilite de un nov lingua franca: On refusa continuar payar custosi tradu
 %% Xelatex likes this, must appear before BibLaTeX:
 \usepackage[hyphens]{url}
 \urlstyle{same}
-
+ 
 \iflsBiblatex	% BibLaTeX
 	\usepackage[
 		natbib=true,
-		style=biblatex-sp-unified,
-		citestyle=sp-authoryear-comp,
+		style=\bstpath biblatex-sp-unified,
+		citestyle=\bstpath sp-authoryear-comp,
 		%refsection=chapter,
 		maxbibnames=99,
 		isbn=false,
@@ -466,7 +491,7 @@ al desirabilite de un nov lingua franca: On refusa continuar payar custosi tradu
 	\setlength{\bibsep}{0mm}
 	%% unified style sheet for linguistics journals
 	%% http://celxj.org/downloads/unified.bst
-	\bibliographystyle{unified} 
+	\bibliographystyle{./langsci/bst/unified} 
 	%% This does not work ...
 	% \setcitestyle{
 	% notesep={: }, % 2002: 125
@@ -678,8 +703,7 @@ al desirabilite de un nov lingua franca: On refusa continuar payar custosi tradu
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\usepackage{pst-barcode}					% for generating bar codes
-\newcommand{\logopath}{./}
+\usepackage{pst-barcode}					% for generating bar codes 
 \newcommand{\lsCoverFontColor}{white}
 \newcommand{\lsCoverBlockColor}{\lsSeriesColor}
 \newcommand{\lsEditorPrefix}{}
@@ -716,7 +740,7 @@ al desirabilite de un nov lingua franca: On refusa continuar payar custosi tradu
 	\fi
 	\iflsOpenReview
 		\iflsDraft
-			\ClassError{langscibook}{Open review mode not compatible with draft mode. Please disable one of them}{}	
+			\ClassError{langsci/langscibook}{Open review mode not compatible with draft mode. Please disable one of them}{}	
 		\fi
 		\begin{textblock}{170}(-20,75)
 			\rotatebox{30}{
@@ -782,7 +806,9 @@ al desirabilite de un nov lingua franca: On refusa continuar payar custosi tradu
 
 %\usepackage{pdfpages}
 \newcommand{\lsAdvertisement}{
-	\include{didyoulikethisbook}
+%	\includepdf[pages={1}]{langsci/graphics/didyoulikethisbook.pdf}
+	
+	\include{\logopath didyoulikethisbook}
 }
 
 \newcommand{\lsBackPage}{		% Back page
@@ -1180,8 +1206,8 @@ al desirabilite de un nov lingua franca: On refusa continuar payar custosi tradu
 \color{black}
 \raggedright\lsCoverSeriesHistoryFont
 
-\IfFileExists{./\lsSeries-info.tex}{\input{./langsci/seriesinfo/\lsSeries-info}}{
-  Series information: ./\lsSeries-info.tex not found!} 
+\IfFileExists{{\seriesinfopath}\lsSeries-info.tex}{\input{./langsci/seriesinfo/\lsSeries-info}}{
+  Series information: {\seriesinfopath}\lsSeries-info.tex not found!} 
 
 \IfStrEq{\lsISSN}{??}		% \IfStrEq from xstring
 	{}
@@ -1349,7 +1375,7 @@ is, or will remain, accurate or appropriate.
 
 \iflsCollection
 	\iflsBiblatex\else
-		\ClassError{langscibook}{Collection option not compatible with plain BibTeX. Please use biblatex option}{}
+		\ClassError{langsci/langscibook}{Collection option not compatible with plain BibTeX. Please use biblatex option}{}
 	\fi
 	
 \renewcommand{\lsEditorPrefix}{{\LARGE Edited by}\\}
@@ -1489,7 +1515,7 @@ is, or will remain, accurate or appropriate.
 
 
 %% useful commands for glossings:
-\usepackage{./langsci-lgr}
+\usepackage{\stylepath langsci-lgr}
 
 %% hspace over width of something without showing it
 \newlength{\LSPTmp}
@@ -1502,7 +1528,7 @@ is, or will remain, accurate or appropriate.
 %\setlength{\epigraphwidth}{.2\textwidth}
 \setlength{\afterepigraphskip}{0\baselineskip}
 
-\usepackage{./langsci-basic}
+\usepackage{\stylepath langsci-basic}
 
 %% floats
 %% http://mintaka.sdsu.edu/GF/bibliog/latex/floats.html
