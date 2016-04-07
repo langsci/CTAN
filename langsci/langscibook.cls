@@ -5,7 +5,21 @@
 %%   Purpose: This file defines the basic document class 
 %%            for books published with Language Science Press.
 %%  Language: LaTeX
-%%   Licence: 
+%%  Copyright 2012- Language Science Press
+%%  Licence: This work may be distributed and/or modified under the
+%%  conditions of the LaTeX Project Public License, either version 1.3
+%%  of this license or (at your option) any later version.
+%%  The latest version of this license is in
+%%    http://www.latex-project.org/lppl.txt
+%%  and version 1.3 or later is part of all distributions of LaTeX
+%%  version 2005/12/01 or later.
+%%
+%% This work has the LPPL maintenance status `maintained'.
+%% 
+%% The Current Maintainer of this work is Sebastian Nordhoff.
+%%
+%% This work consists of the files #FIXME
+%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \NeedsTeXFormat{LaTeX2e}
@@ -21,14 +35,7 @@
 \newcommand{\seriesinfopath}{}
 \newcommand{\bstpath}{}
 \newcommand{\stylepath}{}
-\newcommand{\bertholdfonts}{}	
-% \renewcommand{\fontpath}{./langsci/fonts/} 
-% \renewcommand{\logopath}{./langsci/graphics/}
-% \renewcommand{\seriesinfopath}{./langsci/seriesinfo/}
-% \renewcommand{\bstpath}{./langsci/bst/}
-% \renewcommand{\stylepath}{./langsci/styles/}
-% \renewcommand{\bertholdfonts}{_B}	
-
+% Paths can be overwritten with option "nonflat"
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
@@ -53,10 +60,18 @@
 \newcommand{\lsFontsize}{11pt}
 \newcommand{\lsCopyright}{CC-BY}
 \newcommand{\lsBiblatexBackend}{bibtex}
+\newcommand{\logotext}{FU-Logo}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%     Conditionals
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \newif\iflsDraft \lsDraftfalse
 \newif\iflsOpenReview \lsOpenReviewfalse
 \newif\iflsShowIndex \lsShowIndexfalse
-
 \newif\iflsIndex \lsIndextrue
 \newif\iflsBiblatex \lsBiblatextrue
 \newif\iflsCollection \lsCollectionfalse
@@ -64,9 +79,17 @@
 \newif\iflsCollectionTOCLong \lsCollectionTOCLongfalse
 \newif\iflsNewtxmath \lsNewtxmathfalse
 \newif\iflsBlackandwhite \lsBlackandwhitefalse
+\newif\iflsCover \lsCoverfalse %output format is cover
 \newif\iflsUscover \lsUscoverfalse
+\newif\iflsModfonts \lsModfontsfalse
 
-%% Option handling:
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%     Option handling
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \RequirePackage{kvoptions}		% for key-value options
 \SetupKeyvalOptions{
 	family=langscibook,
@@ -92,9 +115,9 @@
 \DeclareStringOption{series}[eotms]
 	\define@key{langscibook}{series}{%
 		\renewcommand{\lsSeries}{#1}}
-% \DeclareStringOption{output}[long]
-% 	\define@key{langscibook}{output}{%
-% 		\renewcommand{\lsOutput}{#1}}
+\DeclareStringOption{output}[short]
+	\define@key{langscibook}{output}{%
+		\renewcommand{\lsOutput}{#1}}
 \DeclareStringOption{copyright}[CC-BY]
 	\define@key{langscibook}{copyright}{%
 		\renewcommand{\lsCopyright}{#1}}
@@ -115,6 +138,16 @@
 	\AtBeginDocument{\renewcommand{\lsISBNdigital}{000-0-000000-00-0}}}
 \DeclareVoidOption{noindex}{  			
 	\lsIndexfalse}
+\DeclareVoidOption{nonflat}{  			
+	\renewcommand{\fontpath}{./langsci/fonts/} 
+	\renewcommand{\logopath}{./langsci/graphics/}
+	\renewcommand{\seriesinfopath}{./langsci/seriesinfo/}
+	\renewcommand{\bstpath}{./langsci/bst/}
+	\renewcommand{\stylepath}{./langsci/styles/}	
+}
+\DeclareVoidOption{modfonts}{  			
+    \lsModfontstrue
+}
 \DeclareVoidOption{showindex}{  			
 	\lsShowIndextrue}
 \DeclareVoidOption{biblatex}{  			
@@ -134,6 +167,33 @@
 \DeclareVoidOption{coverus}{  			
 	\lsUscovertrue}
 \ProcessKeyvalOptions{langscibook}
+	
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%    Cover lengths
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+
+\newlength{\csspine} 
+\newlength{\bodspine}
+\newlength{\bleed}
+\newlength{\seitenbreite}
+\newlength{\seitenhoehe}
+\newlength{\spinewidth}
+\newlength{\totalwidth}
+\newlength{\totalheight}
+\setlength{\csspine}{20mm}
+\setlength{\bodspine}{20mm}
+\setlength{\bleed}{3.175mm}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%     Class
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 
 \LoadClass[
 	fontsize=\lsFontsize,	% default is 11pt
@@ -146,6 +206,12 @@
 	%appendixprefix
 	]{scrbook}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%     Packages
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \usepackage{etex}
 \reserveinserts{18}
 \usepackage{xstring}	% Needed on Lines 114ff and again on 167
@@ -155,88 +221,88 @@
 \usepackage{tikz} % Needed for covers and advert page
 	\usetikzlibrary{positioning}
 	\usetikzlibrary{calc}
+
+\usepackage{pbox}   % boxes with maximum width
 	
+% %standard commands
+\usepackage{\stylepath langsci-basic}
+
+%% useful commands for glossings:
+\usepackage{\stylepath langsci-lgr}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-%      Output types (moved from below)
+%      Output types  
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % \newcommand{\lsOutputLong}{long}
-\newcommand{\lsOutputShort}{short}
-\newcommand{\lsOutputInprep}{inprep}
-\newcommand{\lsOutputPaper}{paper}
-\newcommand{\lsOutputGuidelines}{guidelines}
-\newcommand{\lsOutputCover}{cover}
-\newcommand{\lsOutputCoverBOD}{coverbod}
-\newcommand{\lsOutputCoverDOB}{coverdob}
-\newcommand{\lsOutputCoverCS}{covercreatespace}
+\newcommand{\lsOutputShort}{short}            % standard book
+\newcommand{\lsOutputInprep}{inprep}          % marks manuscript as in preparation
+\newcommand{\lsOutputPaper}{paper}            % paper in edited volume
+\newcommand{\lsOutputGuidelines}{guidelines}  % guidelines
+\newcommand{\lsOutputCover}{cover}            % FIXME remove this?
+\newcommand{\lsOutputCoverBOD}{coverbod}      % cover with BoD measurements
+\newcommand{\lsOutputCoverDOB}{coverdob}      % FIXME remove this?
+\newcommand{\lsOutputCoverCS}{covercreatespace} % cover with CreateSpace measurements
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-%    Page size and text area:
+%    Cover creation for print on demand
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 
-\newlength{\csspine} 
-\newlength{\bodspine}
-        \newlength{\seitenbreite}
-        \newlength{\seitenhoehe}
-        \newlength{\spinewidth}
-        \newlength{\totalwidth}
-        \newlength{\totalheight}
-
  \ifx\lsOutput\lsOutputCoverCS % if output = cover; This is the CreateSpace Version 
-	\input{./lengths.tex}
- 
- 	\newlength{\bleed}
- 	\setlength{\bleed}{3.175mm}
- 	\setlength{\seitenbreite}{169.9mm}
- 	\setlength{\seitenhoehe}{244.1mm}
- 	
- 	\setlength{\spinewidth}{\csspine}			% Create Space Version. Value is in ./localmetadata.tex
- 	
- 	\usepackage{calc}
+% 	\input{./lengths.tex}
+    \lsCovertrue
+    \setlength{\bleed}{3.175mm}
+    \setlength{\seitenbreite}{169.9mm}
+    \setlength{\seitenhoehe}{244.1mm} 	
+    \setlength{\spinewidth}{\csspine} % Create Space Version
+    
+    \usepackage{calc}
 
- 	\setlength{\totalwidth}{\spinewidth+\seitenbreite+\seitenbreite+\bleed+\bleed}
- 	\setlength{\totalheight}{\seitenhoehe+\bleed+\bleed}
- 	\usepackage[paperheight=\totalheight, paperwidth=\totalwidth]{geometry}
- 	\hyphenpenalty 750
- 	    
- \else
- 
- %% Nested ifx. Here follows the BoD Version
- 
-  \ifx\lsOutput\lsOutputCoverBOD 
-     \usepackage{calc}
-
-  \input{./lengths.tex}
-  
+    \setlength{\totalwidth}{\spinewidth+\seitenbreite+\seitenbreite+\bleed+\bleed}
+    \setlength{\totalheight}{\seitenhoehe+\bleed+\bleed}
+    \usepackage[paperheight=\totalheight, paperwidth=\totalwidth]{geometry}
+    \hyphenpenalty 750
+\fi
+ 	   
+\ifx\lsOutput\lsOutputCoverBOD 
+  \lsCovertrue 	
+  \usepackage{calc}
+%     \input{./lengths.tex}
   \newlength{\bodfold}
   \newlength{\totalspine}
   \setlength{\bodfold}{8mm}
   \setlength{\seitenbreite}{192mm}
   \setlength{\seitenhoehe}{280mm} % For BOD: Hardcover, Gerader Rücken, Kaschiert, papier 80g/m², weiß
-  \setlength{\spinewidth}{\bodspine}         % BoD Version. Value is in ./localmetadata.tex
+  \setlength{\spinewidth}{\bodspine}  
   \setlength{\totalspine}{\spinewidth+\bodfold+\bodfold} 
   \setlength{\totalwidth}{\spinewidth+\seitenbreite+\seitenbreite}
-  %\setlength{\totalheight}{\seitenhoehe}
+  \setlength{\totalheight}{\seitenhoehe}
   \usepackage[paperheight=\seitenhoehe, paperwidth=\totalwidth]{geometry}
   \hyphenpenalty 750
-  
- \else 
+\fi
  
- 	\usepackage[ 					% if output != cover
- 	papersize={170mm,240mm}
- 	,top=27.4mm % TODO nachgemessen, nach Vermassung eigentlich 30mm-16pt = 25.8mm
- 	,inner=20.5mm, 
- 	,outer=24.5mm
- 	%,showframe,pass
- 	,marginparwidth=50pt
- 	]{geometry}
- \fi
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%    Page size and text area if not cover
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
+
+\iflsCover
+%output types cover have already been handled
+\else % output != cover
+  \usepackage[ 					
+  papersize={170mm,240mm}
+  ,top=27.4mm % TODO nachgemessen, nach Vermassung eigentlich 30mm-16pt = 25.8mm
+  ,inner=20.5mm, 
+  ,outer=24.5mm
+  %,showframe,pass
+  ,marginparwidth=50pt
+  ]{geometry}
 \fi			
 
 \usepackage[
@@ -247,7 +313,6 @@
 \setlength{\TPVertModule}{\TPHorizModule}
 \textblockorigin{0mm}{0mm}
 
-\usepackage{pbox}   % boxes with maximum width
 	
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -259,46 +324,72 @@
 \usepackage{ifxetex}
 \ifxetex\else\ClassError{langsci/langscibook}{Please use XeLaTeX!}{}\fi	
 \usepackage{amssymb} % has to be loaded before other stuff
-% \usepackage{dtklogos}\newcommand{\xelatex}{\XeLaTeX\xspace}	% the XeLaTeX symbol
-
-%\usepackage{fontspec}	% already loaded by XeLaTeX
 \PassOptionsToPackage{no-math}{fontspec} % must appear before metalogo or any fontspec stuff; deactivates fontspec's math settings, which is necessary to let newtxmath do the job 
 \usepackage{metalogo}\newcommand{\xelatex}{\XeLaTeX\xspace}
 \usepackage{dejavu}
 \usepackage{libertine}
-\setsansfont[
-	%Ligatures={TeX,Common},		% not supported by ttf
-	Scale=MatchLowercase,
-	Path=\fontpath,
-	BoldFont = Arimo-Bold_B.ttf ,
-	ItalicFont = Arimo-Italic_B.ttf ,				
-	BoldItalicFont = Arimo-BoldItalic_B.ttf 		
-	]{Arimo_B.ttf}
-		
+
 \setmonofont[
 	Ligatures={TeX},Scale=MatchLowercase,
-% 	Path=\fontpath,
 	BoldFont = DejaVuSansMono-Bold.ttf ,
 	SlantedFont = DejaVuSansMono-Oblique.ttf ,				
 	BoldSlantedFont = DejaVuSansMono-BoldOblique.ttf 		
 	]{DejaVuSansMono.ttf}
 
-\setmainfont[
-        Ligatures={TeX,Common},
-        Path=\fontpath,
-        PunctuationSpace=0,
-        Numbers={Proportional},
-        BoldFont = LinLibertine_RZ\bertholdfonts .otf ,
-        ItalicFont = LinLibertine_RI\bertholdfonts .otf ,
-        BoldItalicFont = LinLibertine_RZI\bertholdfonts .otf,
-        BoldSlantedFont = LinLibertine_RZ\bertholdfonts .otf,
-        SlantedFont    = LinLibertine_R\bertholdfonts .otf,
-        SlantedFeatures = {FakeSlant=0.25},
-        BoldSlantedFeatures = {FakeSlant=0.25},
-        SmallCapsFeatures = {FakeSlant=0},
-        ]{LinLibertine_R\bertholdfonts .otf}		
+\iflsModfonts{% use Langsci fonts
+  \setsansfont[
+	  %Ligatures={TeX,Common},		% not supported by ttf
+	  Scale=MatchLowercase,
+	  Path=\fontpath,
+	  BoldFont = Arimo-Bold_B.ttf ,
+	  ItalicFont = Arimo-Italic_B.ttf ,				
+	  BoldItalicFont = Arimo-BoldItalic_B.ttf 		
+	  ]{Arimo_B.ttf}
+		  
 
-\iflsNewtxmath							% some users have problems when installing newtxmath
+  \setmainfont[
+	  Ligatures={TeX,Common},
+	  Path=\fontpath,
+	  PunctuationSpace=0,
+	  Numbers={Proportional},
+	  BoldFont = LinLibertine_RZ_B.otf ,
+	  ItalicFont = LinLibertine_RI_B.otf ,
+	  BoldItalicFont = LinLibertine_RZI_B.otf,
+	  BoldSlantedFont = LinLibertine_RZ_B.otf,
+	  SlantedFont    = LinLibertine_R_B.otf,
+	  SlantedFeatures = {FakeSlant=0.25},
+	  BoldSlantedFeatures = {FakeSlant=0.25},
+	  SmallCapsFeatures = {FakeSlant=0},
+	  ]{LinLibertine_R_B.otf}		
+\else % use standard fonts
+    \setsansfont[
+	  %Ligatures={TeX,Common},		% not supported by ttf
+	  Scale=MatchLowercase,
+	  Path=\fontpath,
+	  BoldFont = Arimo-Bold.ttf ,
+	  ItalicFont = Arimo-Italic.ttf ,				
+	  BoldItalicFont = Arimo-BoldItalic.ttf 		
+	  ]{Arimo-Regular.ttf}
+		  
+
+  \setmainfont[
+	  Ligatures={TeX,Common},
+	  Path=\fontpath,
+	  PunctuationSpace=0,
+	  Numbers={Proportional},
+	  BoldFont = LinLibertine_RZ.otf ,
+	  ItalicFont = LinLibertine_RI.otf ,
+	  BoldItalicFont = LinLibertine_RZI.otf,
+	  BoldSlantedFont = LinLibertine_RZ.otf,
+	  SlantedFont    = LinLibertine_R.otf,
+	  SlantedFeatures = {FakeSlant=0.25},
+	  BoldSlantedFeatures = {FakeSlant=0.25},
+	  SmallCapsFeatures = {FakeSlant=0},
+	  ]{LinLibertine_R.otf}		
+
+\fi
+
+\iflsNewtxmath		% some users have problems when installing newtxmath
 	\usepackage[libertine]{newtxmath}
 
 	%% following http://tex.stackexchange.com/questions/297328/xelatex-does-not-load-newtxmath-with-linuxlibertine-sometimes
@@ -374,14 +465,19 @@ al desirabilite de un nov lingua franca: On refusa continuar payar custosi tradu
 %% for imprint:
 \def\translator#1{\gdef\@translator{#1}}
 \translator{}
+
 \def\typesetter#1{\gdef\@typesetter{#1}}
 \typesetter{}
+
 \def\proofreader#1{\gdef\@proofreader{#1}}
 \proofreader{}
+
 \def\openreviewer#1{\gdef\@openreviewer{#1}}
 \openreviewer{}
+
 \def\illustrator#1{\gdef\@illustrator{#1}}
 \illustrator{}
+
 \newcommand{\lsAdditionalFontsImprint}{}
 \newcommand{\AdditionalFontImprint}[1]{
 	\edef\fontstemp{\lsAdditionalFontsImprint}
@@ -392,6 +488,7 @@ al desirabilite de un nov lingua franca: On refusa continuar payar custosi tradu
 \newcommand{\ISBNdigital}[1]{\renewcommand{\lsISBNdigital}{#1}}
 \newcommand{\ISBNsoftcover}[1]{\renewcommand{\lsISBNsoftcover}{#1}}
 \newcommand{\ISBNhardcover}[1]{\renewcommand{\lsISBNhardcover}{#1}}
+
 \newcommand{\URL}[1]{\renewcommand{\lsURL}{#1}}
 \newcommand{\Series}[1]{\renewcommand{\lsSeries}{#1}}
 \newcommand{\SeriesNumber}[1]{\renewcommand{\lsSeriesNumber}{#1}}
@@ -420,7 +517,6 @@ al desirabilite de un nov lingua franca: On refusa continuar payar custosi tradu
 	\@afterindentfalse
 	\@afterheading
 }
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
@@ -536,6 +632,26 @@ al desirabilite de un nov lingua franca: On refusa continuar payar custosi tradu
 
 \usepackage{booktabs} % for nicer lines
 
+%% floats
+%% http://mintaka.sdsu.edu/GF/bibliog/latex/floats.html
+%% Alter some LaTeX defaults for better treatment of figures:
+
+%% See p.105 of "TeX Unbound" for suggested values.
+%% See pp. 199-200 of Lamport's "LaTeX" book for details.
+%%   General parameters, for ALL pages:
+\renewcommand{\topfraction}{0.9}	% max fraction of floats at top
+\renewcommand{\bottomfraction}{0.8}	% max fraction of floats at bottom
+%%   Parameters for TEXT pages (not float pages):
+\setcounter{topnumber}{2}
+\setcounter{bottomnumber}{2}
+\setcounter{totalnumber}{4}     % 2 may work better
+\setcounter{dbltopnumber}{2}    % for 2-column pages
+\renewcommand{\dbltopfraction}{0.9}	% fit big float above 2-col. text
+\renewcommand{\textfraction}{0.07}	% allow minimal text w. figs
+%%  Parameters for FLOAT pages (not text pages):
+\renewcommand{\floatpagefraction}{0.7}	% require fuller float pages
+    %% N.B.: floatpagefraction MUST be less than topfraction !!
+\renewcommand{\dblfloatpagefraction}{0.7}	% require fuller float pages
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
@@ -628,6 +744,8 @@ al desirabilite de un nov lingua franca: On refusa continuar payar custosi tradu
 
 \fi
 
+% Author index
+
 \newcommand{\ia}[1]{\if@noftnote%
 \index{#1}%
 \else%
@@ -636,6 +754,8 @@ al desirabilite de un nov lingua franca: On refusa continuar payar custosi tradu
 % \index{#1|fn{\thefootnote}}%
 \fi%
 }
+
+% Subject index
 
 \newcommand{\is}[1]{\if@noftnote%
 \index[sbj]{#1}%
@@ -646,7 +766,8 @@ al desirabilite de un nov lingua franca: On refusa continuar payar custosi tradu
 \fi%
 }
 
-%% \index[lan] für Einträge in separaten Index
+% Language index
+
 \newcommand{\il}[1]{%
 \if@noftnote%
 \index[lan]{#1}%
@@ -660,6 +781,22 @@ al desirabilite de un nov lingua franca: On refusa continuar payar custosi tradu
 %   \usepackage{showidx} 	% Doesn't work with multiple indexes?
 % \fi
 
+%% this is required by authorindex
+\newif\ifshowindex \showindexfalse
+
+\usepackage{authorindex}
+
+
+\iflsShowIndex	% shows index commands in text
+	\usepackage{soul}
+	\usepackage[textwidth=2cm
+		]{todonotes}
+	\usepackage[noadjust]{marginnote}
+	\renewcommand{\marginpar}{\marginnote}
+	\let\isold\is 
+	\renewcommand{\isi}[1]{\sethlcolor{green}\hl{#1}\isold{#1}}
+	\renewcommand{\is}[1]{\todo[color=green,size=\scriptsize]{\tiny#1}\isold{#1}}
+\fi
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -681,9 +818,6 @@ al desirabilite de un nov lingua franca: On refusa continuar payar custosi tradu
 	pdfpagelayout=TwoPageRight,   % first page is separate
 	%ps2pdf=true
 	]{hyperref}
-
-%% xelatex hates this.
-%\usepackage{breakurl} 	
 
 %% add hyperlinks for DOIs in bibliography; must appear after hyperref
 \usepackage{doi}
@@ -835,22 +969,22 @@ al desirabilite de un nov lingua franca: On refusa continuar payar custosi tradu
 	}%	
 	\end{textblock}}
 
-\newcommand{\lsSpine}{			% Book spine
-	\renewcommand{\newlineSpine}{\\}
-	\renewcommand{\newlineCover}{}
-	\begin{textblock}{40}(65,0)
-	\rotatebox{90}{\color{black}\begin{minipage}[c][\lsSpineBreadth][c]{\paperheight}
-		\color{\lsSeriesColor}
-		\hspace{7.5mm}
-		\IfFileExists{\logopath/langsci_spinelogo_nocolor.pdf}{$\vcenter{\hbox{\includegraphics[angle=-90,origin=c]{\logopath/langsci_spinelogo_nocolor.pdf}}}$}{logo}
-		\hspace{15mm} 
-		{\lsSpineTitleFont
-			\rotatebox[origin=c]{180}{\pbox[c]{150mm}{\lsSpineTitle}}}
-		\hspace{13mm}
-		{\lsSpineAuthorFont 
-			\rotatebox[origin=c]{180}{\pbox[c]{100mm}{\lsSpineAuthor\if\lsEditorSuffix\empty\else\ \lsEditorSuffix\fi}}}
-	\end{minipage}} 
-	\end{textblock}}
+% \newcommand{\lsSpine}{			% Book spine
+% 	\renewcommand{\newlineSpine}{\\}
+% 	\renewcommand{\newlineCover}{}
+% 	\begin{textblock}{40}(65,0)
+% 	\rotatebox{90}{\color{black}\begin{minipage}[c][\lsSpineBreadth][c]{\paperheight}
+% 		\color{\lsSeriesColor}
+% 		\hspace{7.5mm}
+% 		\IfFileExists{\logopath/langsci_spinelogo_nocolor.pdf}{$\vcenter{\hbox{\includegraphics[angle=-90,origin=c]{\logopath/langsci_spinelogo_nocolor.pdf}}}$}{logo}
+% 		\hspace{15mm} 
+% 		{\lsSpineTitleFont
+% 			\rotatebox[origin=c]{180}{\pbox[c]{150mm}{\lsSpineTitle}}}
+% 		\hspace{13mm}
+% 		{\lsSpineAuthorFont 
+% 			\rotatebox[origin=c]{180}{\pbox[c]{100mm}{\lsSpineAuthor\if\lsEditorSuffix\empty\else\ \lsEditorSuffix\fi}}}
+% 	\end{minipage}} 
+% 	\end{textblock}}
 
 \newcommand{\onlyAuthor}{%		% collection paper
 	\renewcommand{\and}{, }% 
@@ -930,7 +1064,7 @@ al desirabilite de un nov lingua franca: On refusa continuar payar custosi tradu
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%% Output types are defined with \newcommand above so they can be used width geometry.
+%% Output types are defined with \newcommand above so they can be used with geometry.
 
 \AtBeginDocument{
 \ifx\lsOutput\lsOutputPaper				% only if output=paper
@@ -977,7 +1111,7 @@ al desirabilite de un nov lingua franca: On refusa continuar payar custosi tradu
 % 	}
 % \fi		
 
-\ifx\lsOutput\lsOutputShort						% only if output=short
+\ifx\lsOutput\lsOutputShort		% only if output=short
 	\setcounter{page}{-1}
 	%% First titlepage:
 	{\lsFrontPage}
@@ -1019,6 +1153,7 @@ al desirabilite de un nov lingua franca: On refusa continuar payar custosi tradu
 \fi
 
 \ifx\lsOutput\lsOutputCoverBOD				 % only if output=cover 
+	\lsCovertrue
 	\renewcommand{\maketitle}{}  %no need for this
 	\StrLen{\@subtitle}[\subtitleStrLen]     % check if a subtitle exists
 	\pagestyle{empty}
@@ -1089,6 +1224,7 @@ al desirabilite de un nov lingua franca: On refusa continuar payar custosi tradu
 	\fi	
 	
 	\ifx\lsOutput\lsOutputCoverCS	 			 % only if output=covercs 	
+	\lsCovertrue
 	\renewcommand{\maketitle}{}  				 % no need for this 			
 	\StrLen{\@subtitle}[\subtitleStrLen]     % check if a subtitle exists
 	\pagestyle{empty}
@@ -1206,8 +1342,8 @@ al desirabilite de un nov lingua franca: On refusa continuar payar custosi tradu
 \color{black}
 \raggedright\lsCoverSeriesHistoryFont
 
-\IfFileExists{{\seriesinfopath}\lsSeries-info.tex}{\input{./langsci/seriesinfo/\lsSeries-info}}{
-  Series information: {\seriesinfopath}\lsSeries-info.tex not found!} 
+\IfFileExists{\seriesinfopath \lsSeries-info.tex}{\input{\seriesinfopath\lsSeries-info}}{
+  Series information: \seriesinfopath \lsSeries-info.tex not found!} 
 
 \IfStrEq{\lsISSN}{??}		% \IfStrEq from xstring
 	{}
@@ -1308,9 +1444,12 @@ Habelschwerdter Allee 45\\
 
 Storage and cataloguing done by FU Berlin \\[3ex]  	
 
-\IfFileExists{\logopath/FULogo_sw_CMYK.pdf}{\includegraphics[width=5cm]{\logopath/FULogo_sw_CMYK.pdf}}{FU-Logo} \\[3ex]
+\IfFileExists{\logopath/logo.pdf}{\includegraphics[width=5cm]{\logopath/logo.pdf}}{\logotext} \\[3ex]
+
 
 \vfill
+
+
 
 \noindent
 \lsp has no responsibility for the persistence or accuracy of URLs for
@@ -1450,7 +1589,7 @@ is, or will remain, accurate or appropriate.
 
 	%% write bib entry to file
 	%% FIXME: the publisher field needs a final period, since this is not provided by \fullciteFooter together with DOIs.
-	\immediate\write\tempfile{@incollection{#1,author={\authorTemp},title={\@title},booktitle={\lsCollectionTitle},editor={\editorTemp},publisher={Language Science Press.},Address={Berlin},year=\the\year,pages={\lsCollectionPaperFirstPage --\lsCollectionPaperLastPage},doi={\lsChapterDOI},options={skipbib=true}}}
+	\immediate\write\tempfile{@incollection{#1,author={\authorTemp},title={{\@title}},booktitle={{\lsCollectionTitle}},editor={\editorTemp},publisher={Language Science Press.},Address={Berlin},year=\the\year,pages={\lsCollectionPaperFirstPage --\lsCollectionPaperLastPage},doi={\lsChapterDOI},options={skipbib=true}}}
  
 	\end{refsection}
 	\end{collectionpaper}}
@@ -1492,10 +1631,6 @@ is, or will remain, accurate or appropriate.
 %% http://tex.stackexchange.com/questions/66722/tex-live-2012-xelatex-moderncv-error-failed-to-convert-input-string-to-utf1
 \hypersetup{unicode,pdfencoding=auto,bookmarksopenlevel=0}
  
-%% this is required by authorindex
-\newif\ifshowindex \showindexfalse
-
-\usepackage{authorindex}
 
 %% quotes are indented at one side only.
 \renewenvironment{quote}
@@ -1514,9 +1649,6 @@ is, or will remain, accurate or appropriate.
 			   {\endlist}
 
 
-%% useful commands for glossings:
-\usepackage{\stylepath langsci-lgr}
-
 %% hspace over width of something without showing it
 \newlength{\LSPTmp}
 \newcommand*{\hspaceThis}[1]{\settowidth{\LSPTmp}{#1}\hspace*{\LSPTmp}}
@@ -1527,40 +1659,5 @@ is, or will remain, accurate or appropriate.
 \renewcommand{\textflush}{flushepinormal}
 %\setlength{\epigraphwidth}{.2\textwidth}
 \setlength{\afterepigraphskip}{0\baselineskip}
-
-\usepackage{\stylepath langsci-basic}
-
-%% floats
-%% http://mintaka.sdsu.edu/GF/bibliog/latex/floats.html
-%% Alter some LaTeX defaults for better treatment of figures:
-
-    %% See p.105 of "TeX Unbound" for suggested values.
-    %% See pp. 199-200 of Lamport's "LaTeX" book for details.
-    %%   General parameters, for ALL pages:
-    \renewcommand{\topfraction}{0.9}	% max fraction of floats at top
-    \renewcommand{\bottomfraction}{0.8}	% max fraction of floats at bottom
-    %%   Parameters for TEXT pages (not float pages):
-    \setcounter{topnumber}{2}
-    \setcounter{bottomnumber}{2}
-    \setcounter{totalnumber}{4}     % 2 may work better
-    \setcounter{dbltopnumber}{2}    % for 2-column pages
-    \renewcommand{\dbltopfraction}{0.9}	% fit big float above 2-col. text
-    \renewcommand{\textfraction}{0.07}	% allow minimal text w. figs
-    %%  Parameters for FLOAT pages (not text pages):
-    \renewcommand{\floatpagefraction}{0.7}	% require fuller float pages
-	%% N.B.: floatpagefraction MUST be less than topfraction !!
-    \renewcommand{\dblfloatpagefraction}{0.7}	% require fuller float pages
-
-\iflsShowIndex	% shows index commands in text
-	\usepackage{soul}
-	\usepackage[textwidth=2cm
-		]{todonotes}
-	\usepackage[noadjust]{marginnote}
-	\renewcommand{\marginpar}{\marginnote}
-	\let\isold\is 
-	\renewcommand{\isi}[1]{\sethlcolor{green}\hl{#1}\isold{#1}}
-	\renewcommand{\is}[1]{\todo[color=green,size=\scriptsize]{\tiny#1}\isold{#1}}
-\fi
-
 
 \endinput
