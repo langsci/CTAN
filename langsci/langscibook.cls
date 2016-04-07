@@ -92,9 +92,9 @@
 \DeclareStringOption{series}[eotms]
 	\define@key{langscibook}{series}{%
 		\renewcommand{\lsSeries}{#1}}
-\DeclareStringOption{output}[long]
-	\define@key{langscibook}{output}{%
-		\renewcommand{\lsOutput}{#1}}
+% \DeclareStringOption{output}[long]
+% 	\define@key{langscibook}{output}{%
+% 		\renewcommand{\lsOutput}{#1}}
 \DeclareStringOption{copyright}[CC-BY]
 	\define@key{langscibook}{copyright}{%
 		\renewcommand{\lsCopyright}{#1}}
@@ -103,8 +103,8 @@
 		\renewcommand{\lsBiblatexBackend}{#1}}
 \DeclareVoidOption{blackandwhite}{
 	\lsBlackandwhitetrue} 
-\DeclareVoidOption{long}{
-	\renewcommand{\lsOutput}{long}}
+% \DeclareVoidOption{long}{
+% 	\renewcommand{\lsOutput}{long}}
 \DeclareVoidOption{smallfont}{  			
 	\renewcommand{\lsFontsize}{10pt}}
 \DeclareVoidOption{draftmode}{	% 'draftmode' instead of 'draft' due to undesirable side efects	
@@ -163,7 +163,7 @@
 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newcommand{\lsOutputLong}{long}
+% \newcommand{\lsOutputLong}{long}
 \newcommand{\lsOutputShort}{short}
 \newcommand{\lsOutputInprep}{inprep}
 \newcommand{\lsOutputPaper}{paper}
@@ -943,39 +943,39 @@ al desirabilite de un nov lingua franca: On refusa continuar payar custosi tradu
 \begin{titlepage}
 \thispagestyle{empty}
 
-\ifx\lsOutput\lsOutputLong				% only if output=long
-	\setcounter{page}{-3}
-	%% First titlepage:
-	{\lsFrontPage}
-	%%%%%%%%%%%%%%%%%%%
-	\newpage\thispagestyle{empty}
-	\null\newpage\thispagestyle{empty}
-	%% Back page:
-	{\lsBackPage}
-	%%%%%%%%%%%%%%%%%%%
-	\newpage\thispagestyle{empty}
-	\null\newpage\thispagestyle{empty}
-	%% Book spine:
-	{\lsSpine}
-	%%%%%%%%%%%%%%%%
-	\newpage\thispagestyle{empty}
-	\null\newpage\thispagestyle{empty}
-	%% Series information:
-	{\lsSeriesHistory}
-	%%%%%%%%%%%%%%%%%%%%%
-	\newpage\thispagestyle{empty}
-	%% Schmutztitel:
-	{\renewcommand{\lsCoverBlockColor}{white}
-	 \renewcommand{\lsCoverFontColor}{\lsSeriesColor}
-	\lsSchmutztitel}
-	%%%%%%%%%%%%%%%%%%%%
-	\AtEndDocument{
-		\lsPageStyleEmpty
-		\null\newpage\thispagestyle{empty}
-		%% Advertisement:
-		{\lsAdvertisement}
-	}
-\fi		
+% \ifx\lsOutput\lsOutputLong				% only if output=long
+% 	\setcounter{page}{-3}
+% 	%% First titlepage:
+% 	{\lsFrontPage}
+% 	%%%%%%%%%%%%%%%%%%%
+% 	\newpage\thispagestyle{empty}
+% 	\null\newpage\thispagestyle{empty}
+% 	%% Back page:
+% 	{\lsBackPage}
+% 	%%%%%%%%%%%%%%%%%%%
+% 	\newpage\thispagestyle{empty}
+% 	\null\newpage\thispagestyle{empty}
+% 	%% Book spine:
+% 	{\lsSpine}
+% 	%%%%%%%%%%%%%%%%
+% 	\newpage\thispagestyle{empty}
+% 	\null\newpage\thispagestyle{empty}
+% 	%% Series information:
+% 	{\lsSeriesHistory}
+% 	%%%%%%%%%%%%%%%%%%%%%
+% 	\newpage\thispagestyle{empty}
+% 	%% Schmutztitel:
+% 	{\renewcommand{\lsCoverBlockColor}{white}
+% 	 \renewcommand{\lsCoverFontColor}{\lsSeriesColor}
+% 	\lsSchmutztitel}
+% 	%%%%%%%%%%%%%%%%%%%%
+% 	\AtEndDocument{
+% 		\lsPageStyleEmpty
+% 		\null\newpage\thispagestyle{empty}
+% 		%% Advertisement:
+% 		{\lsAdvertisement}
+% 	}
+% \fi		
 
 \ifx\lsOutput\lsOutputShort						% only if output=short
 	\setcounter{page}{-1}
