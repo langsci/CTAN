@@ -1149,7 +1149,9 @@ al desirabilite de un nov lingua franca: On refusa continuar payar custosi tradu
 \ifx\lsOutput\lsOutputGuidelines				% only if output=guidelines
 	{\setcounter{page}{-1}
 	%% First titlepage:
-	{\lsFrontPage}}
+	{\lsFrontPage}    
+	\renewcommand{\lsAdvertisement}{}
+	}
 \fi
 
 \ifx\lsOutput\lsOutputCoverBOD				 % only if output=cover 

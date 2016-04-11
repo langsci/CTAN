@@ -1,8 +1,10 @@
-\documentclass[guidelines]{langscibook}
+\documentclass[modfonts,output=guidelines]{langscibook}
 \author{Sebastian Nordhoff} 
-\title{The \texttt{.langscibook} \latex class}
-\renewcommand{\lsSeries}{guidlines}
-\renewcommand{\lsSeriesNumber}{}
+\title{The \texttt{langscibook} {\LaTeX} class}
+\subtitle{}
+\renewcommand{\lsSeries}{guidelines}
+\renewcommand{\lsSeriesNumber}{~}
+\renewcommand{\lsAdvertisement}{}
 % \BackTitle{} 
 % \BackBody{}
 % \dedication{}
@@ -16,6 +18,8 @@
 % \renewcommand{\lsURL}{http://langsci-press.org/catalog/book/000} 
 
 \bibliography{localbibliography}
+
+\newcommand{\option}[3]{\subsection{\texttt{#1}}{#2}\\Default value: {\texttt{#3}}}
 \begin{document}
 \maketitle
 
@@ -27,123 +31,71 @@
 % \include{chapters/abbreviations} 
 
 \mainmatter       
-\section{Introduction}
-\section{The class}
-\section{Options}
-\subsection{String options}
-\subsubsection{number}
-Number of the book within the series\\
-Default value: "??"
-\subsubsection{issn}
-Default value: "??"
-\subsubsection{isbndigital}
-The ISBN of the digital release\\
-Default value: "000-0-000000-00-0"
-\subsubsection{isbnsoftcover}
-The ISBN of the soft cover release\\
-Default value: "000-0-000000-00-0"
-\subsubsection{isbnsoftcoverus}
-The ISBN of the US version of soft cover release (used for distribution to US academic institutions)\\
-Default value: "000-0-000000-00-0"
-\subsubsection{isbnhardcover}
-The ISBN of the hard cover release
-Default value: "000-0-000000-00-0"
-\subsubsection{url}
-the URL of the book \\
-Default value: "http://langsci-press.org/catalog"
-\subsubsection{series}
-The series code (see \texttt{series.def} for a list of abbreviations)
-Default value: "eotms"
-\subsubsection{output}
-different output formats\\
-Default value: short
+\chapter{Introduction}
+\chapter{The class}
+\chapter{Options}
+\section{String options}
+\option{number}{Number of the book within the series}{"??"}
+\option{issn}{ISSN of the series this book will appear in}{"??"}
+\option{isbndigital}{The ISBN of the digital release}{"000-0-000000-00-0"}
+\option{isbnsoftcover}{The ISBN of the soft cover release}{"000-0-000000-00-0"}
+\option{isbnsoftcoverus}{The ISBN of the US version of soft cover release (used for distribution to US academic institutions)}{"000-0-000000-00-0"}
+\option{isbnhardcover}{The ISBN of the hard cover release}{"000-0-000000-00-0"}
+\option{url}{the URL of the book }{"http://langsci-press.org/catalog"}
+\option{series}{The series code (see \texttt{series.def} for a list of abbreviations)}{"eotms"}
+\option{output}{different output formats}{short}
 \begin{itemize}
-\item short
-\item inprep
-\item paper
-\item guidelines
-\item cover
-\item coverbod
-\item coverdob
-\item covercreatespace 
+\item book: The book with frontcover and backcover 
+\item inprep: Mark manuscript as in preparation
+\item paper: contribution to edited volume
+\item guidelines: Choose color grey; condense frontmatter
+\item coverbod: create a two-page wide cover  (back-spine-front) for use with BoD
+\item covercreatespace: create a two-page wide cover  (back-spine-front) for use with CreateSpace 
 \end{itemize}
-
-
-Default value: "short"
-\subsubsection{copyright}
-**CC-BY** | CC-BY-ND | ...
-Default value: "CC-BY"
-\subsubsection{biblatexbackend}
-the backend of BibLaTeX\\
-Default value: "bibtex"
-% **bibtex** \| biber | 
-
-\subsection{Boolean options}
-% \subsubsection{blackandwhite}
-Remove all colors\\
-% Default value: false
-% \subsubsection{smallfont}
+\option{copyright}{The license chosen}{"CC-BY"}
+\option{biblatexbackend}{The backend of BibLaTeX}{"bibtex"}
+Alternative: \texttt{biber}
+\section{Boolean options}
+% \option{blackandwhite}
+% Remove all colors}
+% {false
+% \option{smallfont}
 % use 10pt as fontsize
-% Default value: false  
-\subsubsection{draftmode}
-switch to draft mode (adds: draft stamp, indication of overlong lines, date)
-Default value: false 
-\subsubsection{openreview}
-switch to open review mode
-Default value: false
-% \subsubsection{noindex}
-% remove index\\
-% Default value: false  
-\subsubsection{nonflat}
-Default value: false  
-\subsubsection{modfonts}
-Default value: false  
-\subsubsection{showindex}
-show indexed terms in margin\\
-Default value: false  
-\subsubsection{biblatex}
-use \BibLaTeX \\
-Default value: true
-\subsubsection{bibtex}
-Use Bibtex\\
-Default value: false  
-\subsubsection{newtxmath}
-switch math fonts to newtxmath \\
-Default value: false  
-\subsubsection{collection}
-for making the book an edited volume\\
-Default value: false  
-\subsubsection{collectionchapter}
-add chapter prefix to each contribution\\
-Default value: false  
-\subsubsection{collectiontoclong}
-more detailed table of content in edited volumes\\
-Default value: false  
-\subsubsection{coverus}
-prints isbnsoftcoverus instead of isbnsoftcover if output=covercreatespace
-Default value: false  
+% {false  
+\option{draftmode}{switch to draft mode (adds: draft stamp, indication of overlong lines, date)}{false} 
+\option{openreview}{switch to open review mode}{false}
+% \option{noindex}
+% remove index}
+% {false  
+\option{nonflat}{Use elaborate directory structure}{false}  
+\option{modfonts}{Use modified fonts provided by Language Science Perss}{false}  
+\option{showindex}{show indexed terms in margin}{false}
+\option{biblatex}{use Bib\LaTeX}{true}
+\option{bibtex}{Use Bibtex}{false}  
+\option{newtxmath}{switch math fonts to newtxmath}{false}
+\option{collection}{Make the book an edited volume}{false}  
+\option{collectionchapter}{add chapter prefix to each contribution}{false}
+\option{collectiontoclong}{more detailed table of content in edited volumes}{false}
+\option{coverus}{print isbnsoftcoverus instead of isbnsoftcover if output=covercreatespace}{false}
 
-
-
-
-\backmatter
-\phantomsection%this allows hyperlink in ToC to work
-\printbibliography[heading=references] 
-\cleardoublepage
-\phantomsection 
-\addcontentsline{toc}{chapter}{Index} 
-\addcontentsline{toc}{section}{Name index}
-\ohead{Name index} 
-\printindex 
-\cleardoublepage
-\phantomsection 
-\addcontentsline{toc}{section}{Language index}
-\ohead{Language index} 
-\printindex[lan] 
-\cleardoublepage  
-\phantomsection 
-\addcontentsline{toc}{section}{Subject index}
-\ohead{Subject index} 
-\printindex[sbj]
-\ohead{} 
+% \backmatter
+% \phantomsection%this allows hyperlink in ToC to work
+% \printbibliography[heading=references] 
+% \cleardoublepage
+% \phantomsection 
+% \addcontentsline{toc}{chapter}{Index} 
+% \addcontentsline{toc}{section}{Name index}
+% \ohead{Name index} 
+% \printindex 
+% \cleardoublepage
+% \phantomsection 
+% \addcontentsline{toc}{section}{Language index}
+% \ohead{Language index} 
+% \printindex[lan] 
+% \cleardoublepage  
+% \phantomsection 
+% \addcontentsline{toc}{section}{Subject index}
+% \ohead{Subject index} 
+% \printindex[sbj]
+% \ohead{} 
 \end{document}
