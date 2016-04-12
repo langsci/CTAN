@@ -228,7 +228,7 @@
 \usepackage{\stylepath langsci-basic}
 
 %% useful commands for glossings:
-\usepackage{\stylepath langsci-lgr}
+% \usepackage{\stylepath langsci-lgr}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
