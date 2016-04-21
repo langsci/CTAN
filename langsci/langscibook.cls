@@ -250,7 +250,7 @@
 %% standard commands
 \usepackage{\stylepath langsci-basic}
 %% useful commands for glossings:
-% \usepackage{\stylepath langsci-lgr} #FIXME this should probably be replaced by \usepackage{leipzig}
+% \usepackage{\stylepath langsci-lgr}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %

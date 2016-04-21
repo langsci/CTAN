@@ -1,4 +1,7 @@
-\documentclass[modfonts,output=guidelines]{langscibook}
+\documentclass[%
+modfonts,
+output=guidelines,
+guidelines]{langscibook}
 \author{Sebastian Nordhoff} 
 \title{The \texttt{langscibook} {\LaTeX} class}
 \subtitle{}
@@ -49,8 +52,8 @@ The class provides for the following:
  \item table of contents
  \item chapters 
  \item list of references (per chapter or global)
- \item Name index, subject index, language index
- \item Advertisement 
+ \item name index, subject index, language index
+ \item advertisement 
  \item back title 
  \item ISBN
  \item DOI (per book and per chapter)
@@ -81,7 +84,7 @@ A couple of additional style files come with the class. Documents using this cla
 The metadata for Language Science Press book series are stored in the file \texttt{series.def}. This file loads the file \texttt{colors.def} to set the colors for the cover and title font. Both files should be safe to use for all books of well-established series. For new series, the ISSN field of \texttt{series.def} might have to be updated. 
 
 \chapter{Creating a book}
-The easiest way to start a book is to download the skeletons from \url{http://langsci-press.org/templatesAndTools}
+The easiest way to start a book is to download the skeletons from \url{http://langsci-press.org/templatesAndTools}. Sample documents for monographs, edited volumes and chapters in edited volumes are provided in the folder \texttt{samples/} as well. 
 
 \section{Creating a monograph}
 Load the class. Make sure the following metadata values are set, either as options or with the metadata commands listed in \sectref{sec:metadatacommands}:
@@ -140,8 +143,8 @@ The metadata values can all also be set via the metadata commands listed in \sec
 % \option{smallfont}
 % use 10pt as fontsize
 % {false  
-\option{draftmode}{switch to draft mode (adds: draft stamp, indication of overlong lines, date)}{false} 
-\option{openreview}{switch to open review mode}{false}
+\option{draftmode}{Switch to draft mode (adds: draft stamp, indication of overlong lines, date)}{false} 
+\option{openreview}{Switch to open review mode}{false}
 % \option{noindex}
 % remove index}
 % {false  
@@ -163,16 +166,16 @@ The metadata values can all also be set via the metadata commands listed in \sec
 \option{isbnsoftcover}{The ISBN of the soft cover release}{"000-0-000000-00-0"}
 \option{isbnsoftcoverus}{The ISBN of the US version of soft cover release (used for distribution to US academic institutions)}{"000-0-000000-00-0"}
 \option{isbnhardcover}{The ISBN of the hard cover release}{"000-0-000000-00-0"}
-\option{url}{the URL of the book }{"http://langsci-press.org/catalog"}
+\option{url}{The URL of the book }{"http://langsci-press.org/catalog"}
 \option{series}{The series code (see \texttt{series.def} for a list of acronyms)}{"eotms"}
-\option{output}{different output formats}{short}
+\option{output}{Different output formats}{book}
 \begin{itemize}
 \item \texttt{book}: The book with frontcover and backcover 
 \item \texttt{inprep}: Mark manuscript as in preparation
-\item \texttt{paper}: contribution to edited volume
+\item \texttt{paper}: Contribution to edited volume
 \item \texttt{guidelines}: Choose color grey; condense frontmatter
-\item \texttt{coverbod}: create a two-page wide cover  (back-spine-front) for use with BoD
-\item \texttt{covercreatespace}: create a two-page wide cover  (back-spine-front) for use with CreateSpace 
+\item \texttt{coverbod}: Create a two-page wide cover  (back-spine-front) for use with BoD
+\item \texttt{covercreatespace}: Create a two-page wide cover  (back-spine-front) for use with CreateSpace 
 \end{itemize}
 \option{copyright}{The license chosen}{"CC-BY"}
 \option{biblatexbackend}{The backend of BibLaTeX}{"bibtex"}
@@ -206,10 +209,10 @@ The following commands are used to indicated metadata. These commands can overri
 
 \option{$\backslash$BackBody}{Text to be printed on the back cover}{Europan lingues es membres del sam familie. Lor separat existentie es un
 myth. Por scientie, musica, sport etc, litot Europa usa li sam vocabular. Li lingues differe solmen in li grammatica, li pronunciation e li plu commun vocabules. Omnicos directe al desirabilite de un nov lingua franca: On refusa continuar payar custosi traductores.}
-\option{$\backslash$BackTitle}{Title on back cover}{\upshape same as on front cover}
+\option{$\backslash$BackTitle}{Title on back cover}{\textrm{same as on front cover}}
 \option{$\backslash$BookDOI}{DOI for the book}{??}
 \option{$\backslash$ChapterDOI}{DOI for a chapter}{??}
-\option{$\backslash$dedication}{A dedication}{\upshape void}
+\option{$\backslash$dedication}{A dedication}{\textrm{void}}
 \option{$\backslash$ISBNdigital}{ISBN for the digital version}{000-0-000000-00-0}
 \option{$\backslash$ISBNhardcover}{ISBN for the hardcover version}{000-0-000000-00-0}
 \option{$\backslash$ISBNsoftcover}{ISBN for the softcover version}{000-0-000000-00-0}
@@ -222,22 +225,23 @@ myth. Por scientie, musica, sport etc, litot Europa usa li sam vocabular. Li lin
 \section{Overrides}
 The following commands allow to override further default settings:
 
-\option{$\backslash$SpineAuthor}{Custom author on spine. Useful for long lists of authors/editors}{\upshape same as on cover} 
-\option{$\backslash$SpineTitle}{Custom title on spine. Useful for long titles}{\upshape same as on cover} 
+\option{$\backslash$SpineAuthor}{Custom author on spine. Useful for long lists of authors/editors}{\textrm{same as on cover}} 
+\option{$\backslash$SpineTitle}{Custom title on spine. Useful for long titles}{\textrm{same as on cover}} 
 
 \section{Command redefinitions}
-The following commands can be redefined to alter the appearance:
+Redefine the following commands to further alter the appearance:
 
 \option{$\backslash$lsAdvertisement}{specify the advertisement on the last page of the book}{$\backslash$include\{$\backslash$logopath didyoulikethisbook\}}
-\option{$\backslash$lsBackBodyFont}{Font used for text on back cover}{main font}
-\option{$\backslash$lsBackTitleFont}{Font used for title on back cover}{$\backslash$sffamily$\backslash$addfontfeatures{Scale=MatchUppercase}$\backslash$fontsize\{25pt\}\{10mm\}$\backslash$selectfont}
-\option{$\backslash$lsCopyright}{Choice of license}{CC-BY}
+\option{$\backslash$lsBackBodyFont}{Font used for text on back cover}{\textrm{main font}} 
+\option{$\backslash$lsBackTitleFont}{Font used for title on back cover}{$\backslash$sffamily$\backslash$addfontfeatures{Scale=MatchUppercase}\\$\backslash$fontsize\{25pt\}\{10mm\}$\backslash$selectfont}
+\option{$\backslash$lsCopyright}{Choice of licence}{CC-BY}
 \option{$\backslash$lsCoverAuthorFont}{Font for author/editor on cover}{$\backslash$fontsize\{25pt\}\{12.5mm\}$\backslash$selectfont}
-\option{$\backslash$lsCoverSubTitleFont}{Font for the subtitle}{$\backslash$sffamily$\backslash$addfontfeatures\{Scale=MatchUppercase\}$\backslash$fontsize\{25pt\}\{10mm\}$\backslash$selectfont}
+\option{$\backslash$lsCoverSubTitleFont}{Font for the subtitle}{$\backslash$sffamily$\backslash$addfontfeatures\{Scale=MatchUppercase\}\\
+$\backslash$fontsize\{25pt\}\{10mm\}$\backslash$selectfont}
 % \option{$\backslash$lsCoverTitleFont 
-\option{$\backslash$lsEditorPrefix}{How editors are indicated on title page}{{$\backslash$LARGE Edited by}\\} 
+\option{$\backslash$lsEditorPrefix}{How editors are indicated on title page. Useful for localization.}{{$\backslash$LARGE Edited by}\\} 
 \option{$\backslash$lsFontsize}{size of main font}{11pt}
-\option{$\backslash$lsImpressumCitationText}{custom citation text, useful for including notes etc.}{\upshape computed from author and title fields} 
+\option{$\backslash$lsImpressumCitationText}{custom citation text, useful for including notes etc.}{\textrm{computed from author and title fields}} 
 \option{$\backslash$lsISSN}{ISSN of the series}{??}
 \option{$\backslash$lsLanguageIndexTitle}{The title of the language index. Change this for non-English works}{Language index} 
 \option{$\backslash$lsNameIndexTitle}{The title of the name index. Change this for non-English works}{Name index} 
@@ -245,7 +249,7 @@ The following commands can be redefined to alter the appearance:
 \option{$\backslash$lsSpineTitleFont}{Font for the title on the spine}{$\backslash$sffamily$\backslash$fontsize\{18pt\}\{14pt\}$\backslash$selectfont}
 \option{$\backslash$lsSubjectIndexTitle}{The title of the subject index. Change this for non-English works}{Subject index} 
 \section{Additions}
-\option{$\backslash$lsAdditionalFontsImprint}{Add additional fonts to the list of fonts in the colophon}{}
+\option{$\backslash$lsAdditionalFontsImprint}{Add additional fonts to the list of fonts in the colophon}{\textrm{void}}
 
 
 \end{document}
