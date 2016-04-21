@@ -15,7 +15,6 @@ The following optional packages are also provided, but have to be included manua
 - langsci-gb4e.sty and langsci-cgloss.sty typeset linguistic examples
 - langsci-forest-setup.sty: definitions for linguistic trees
 - langsci-bidi.sty: bidirectional text
-- langsci-lgr.sty: abbreviations for Leipzig Glossing Rules glosses
 - langsci-tbls.sty: macros for the textbook series Textbooks in Language Sciences
 
 
