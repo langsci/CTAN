@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%      File: langscibook.cls
 %%    Author: Language Science Press (http://langsci-press.org)
-%%      Date: 2016-04-26 10:13:33 UTC
+%%      Date: #FIXME UTC
 %%   Purpose: This file defines the basic document class 
 %%            for books published with Language Science Press.
 %%  Language: LaTeX
@@ -18,6 +18,7 @@
 %% 
 %% The Current Maintainer of this work is Sebastian Nordhoff.
 %%
+%% This work consists of the files #FIXME
 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -121,7 +122,7 @@
 \newif\iflsCollection \lsCollectionfalse
 \newif\iflsCollectionChapter \lsCollectionChapterfalse
 \newif\iflsCollectionTOCLong \lsCollectionTOCLongfalse
-\newif\iflsNewtxmath \lsNewtxmathfalse
+\newif\iflsNewtxmath \lsNewtxmathtrue
 \newif\iflsCover \lsCoverfalse %output format is cover
 \newif\iflsUscover \lsUscoverfalse
 \newif\iflsModfonts \lsModfontsfalse
@@ -185,16 +186,15 @@
 	\renewcommand{\stylepath}{./langsci/styles/}	
 }
 \DeclareVoidOption{modfonts}{  			
-    \lsModfontstrue
-}
+    \lsModfontstrue}
 \DeclareVoidOption{showindex}{  			
 	\lsShowIndextrue}
 \DeclareVoidOption{biblatex}{  			
 	\lsBiblatextrue}
 \DeclareVoidOption{bibtex}{  			
 	\lsBiblatexfalse}
-\DeclareVoidOption{newtxmath}{  			
-	\lsNewtxmathtrue}
+\DeclareVoidOption{nonewtxmath}{  			
+	\lsNewtxmathfalse}
 \DeclareVoidOption{collection}{  			
 	\lsCollectiontrue}
 \DeclareVoidOption{collectionchapter}{  			
@@ -249,7 +249,7 @@
 %% standard commands
 \usepackage{\stylepath langsci-basic}
 %% useful commands for glossings:
-% \usepackage{\stylepath langsci-lgr}
+% \usepackage{\stylepath langsci-lgr} #FIXME this should probably be replaced by \usepackage{leipzig}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
@@ -418,7 +418,7 @@
   
   %% Spine
   \renewcommand{\newlineCover}{}
-  \node [above = 7.5mm of lspcls_bgspline.south] (lspcls_splinelogo) {\color{\lsSeriesColor}\includegraphics{\logopath/langsci_spinelogo_nocolor.pdf}};
+  \node [above = 7.5mm of lspcls_bgspline.south] (lspcls_splinelogo) {\color{\lsSeriesColor}\includegraphics{\logopath langsci_spinelogo_nocolor.pdf}};
   \node [font=\fontsize{18pt}{14pt}\selectfont, above left = 15mm and 4mm of lspcls_splinelogo.north, rotate=270] (lspcls_splinetitle) {\color{\lsSeriesColor} \lsSpineAuthorFont{\lsSpineAuthor\lsEditorSuffix} \hspace{13mm} \lsSpineTitleFont{\@title}}; 
   \renewcommand{\newlineCover}{\\}
 
@@ -435,7 +435,7 @@
     \node [font=\fontsize{25pt}{12.5mm}\selectfont, right, below = 11.2mm of lspcls_coversubtitle.south, text width=137mm] {\color{\lsCoverFontColour}\lsCoverAuthorFont{\nohyphens{\lsEditorPrefix\@author\par}}};
   \fi
   
-  \node [above left = 10mm and 7.5mm of lspcls_bg1.south east] {\color{\lsCoverFontColour}\includegraphics{\logopath/langsci_logo_nocolor.pdf}};
+  \node [above left = 10mm and 7.5mm of lspcls_bg1.south east] {\color{\lsCoverFontColour}\includegraphics{\logopath langsci_logo_nocolor.pdf}};
   \node [above right = 18.5mm and -.1mm of lspcls_bg1.south west, rectangle, fill=white, minimum size=17pt] (lspcls_square) {}; % 2
   \path let \p1 = (lspcls_square.north east), \p2 = (lspcls_covertitle.west) in node at (\x2,\y1) (lspcls_seriesinfo) [font=\fontsize{17pt}{7.5mm}\selectfont, right, text width=95mm, anchor=north west] {\color{\lsCoverFontColour}\lsCoverSeriesFont{\lsSeriesTitle\par}};
   
@@ -489,7 +489,7 @@
   
     %% Spine
     \renewcommand{\newlineCover}{}
-    \node [above = 10.675mm of lspcls_bgspline.south] (lspcls_splinelogo) {\color{\lsSeriesColor}\includegraphics{\logopath/langsci_spinelogo_nocolor.pdf}};
+    \node [above = 10.675mm of lspcls_bgspline.south] (lspcls_splinelogo) {\color{\lsSeriesColor}\includegraphics{\logopath langsci_spinelogo_nocolor.pdf}};
     \node [font=\fontsize{18pt}{14pt}\selectfont, above left = 15mm and 4mm of lspcls_splinelogo.north, rotate=270] (lspcls_splinetitle) {\color{\lsSeriesColor} \lsSpineAuthorFont{\lsSpineAuthor\lsEditorSuffix} \hspace{13mm} \lsSpineTitleFont{\@title}};
     \renewcommand{\newlineCover}{\\} 
     
@@ -505,7 +505,7 @@
       \node [font=\fontsize{25pt}{12.5mm}\selectfont, right, below = 11.2mm of lspcls_coversubtitle.south, text width=140mm] {\color{\lsCoverFontColour}\lsCoverAuthorFont\nohyphens{\lsEditorPrefix\@author\par}};
     \fi
     
-    \node [below right = 197.5mm and 117.1mm of lspcls_bg1.north west] {\color{\lsCoverFontColour}\includegraphics{\logopath/langsci_logo_nocolor.pdf}};
+    \node [below right = 197.5mm and 117.1mm of lspcls_bg1.north west] {\color{\lsCoverFontColour}\includegraphics{\logopath langsci_logo_nocolor.pdf}};
     \node [above right = 18.5mm and -.1mm of lspcls_bg1.south west, rectangle, fill=white, minimum size=17pt] (lspcls_square) {}; % 2
     \path let \p1 = (lspcls_square.north east), \p2 = (lspcls_covertitle.west) in node at (\x2,\y1) (lspcls_seriesinfo) [font=\fontsize{17pt}{7.5mm}\selectfont, right, text width=95mm, anchor=north west] {\color{\lsCoverFontColour}\lsCoverSeriesFont{\lsSeriesTitle\par}};
     
@@ -862,7 +862,7 @@
 
 \newcommand{\lsCoverLogo}{    
   \begin{textblock}{33}(124.6,205)
-    \raggedright\IfFileExists{\logopath/langsci_logo_nocolor.pdf}{\includegraphics{\logopath/langsci_logo_nocolor.pdf}}{langsci logo}  
+    \raggedright\IfFileExists{\logopath langsci_logo_nocolor.pdf}{\includegraphics{\logopath langsci_logo_nocolor.pdf}}{langsci logo}  
   \end{textblock}}
 
 \newcommand{\lsFrontPage}{    % Front page
@@ -912,7 +912,7 @@
 %   \rotatebox{90}{\color{black}\begin{minipage}[c][\lsSpineBreadth][c]{\paperheight}
 %     \color{\lsSeriesColor}
 %     \hspace{7.5mm}
-%     \IfFileExists{\logopath/langsci_spinelogo_nocolor.pdf}{$\vcenter{\hbox{\includegraphics[angle=-90,origin=c]{\logopath/langsci_spinelogo_nocolor.pdf}}}$}{logo}
+%     \IfFileExists{\logopath langsci_spinelogo_nocolor.pdf}{$\vcenter{\hbox{\includegraphics[angle=-90,origin=c]{\logopath langsci_spinelogo_nocolor.pdf}}}$}{logo}
 %     \hspace{15mm} 
 %     {\lsSpineTitleFont
 %       \rotatebox[origin=c]{180}{\pbox[c]{150mm}{\lsSpineTitle}}}
@@ -1066,7 +1066,7 @@ Habelschwerdter Allee 45\\
 
 Storage and cataloguing done by FU Berlin \\[3ex]   
 
-\IfFileExists{\logopath/logo.pdf}{\includegraphics[width=5cm]{\logopath/logo.pdf}}{\logotext} \\[3ex]
+\IfFileExists{\logopath logo.pdf}{\includegraphics[width=5cm]{\logopath logo.pdf}}{\logotext} \\[3ex]
 
 
 \vfill
@@ -1454,14 +1454,13 @@ is, or will remain, accurate or appropriate.
 \usepackage{authorindex}
 
 \iflsShowIndex	% shows index commands in text
-    \usepackage{soul}
-    \usepackage[textwidth=2cm
-	    ]{todonotes}
-    \usepackage[noadjust]{marginnote}
+    \RequirePackage{soul}
+    \RequirePackage{todonotes}
+    \RequirePackage[noadjust]{marginnote}
     \renewcommand{\marginpar}{\marginnote}
     \let\isold\is 
     \renewcommand{\isi}[1]{\sethlcolor{green}\hl{#1}\isold{#1}}
-    \renewcommand{\is}[1]{\todo[color=green,size=\scriptsize]{\tiny#1}\isold{#1}}
+    \renewcommand{\is}[1]{{\tikzstyle{notestyleraw} += [text width=1.5cm]\todo[color=green,size=\scriptsize]{\tiny#1}\isold{#1}}}
 \fi
 
 
@@ -1656,7 +1655,7 @@ is, or will remain, accurate or appropriate.
   \AuthorAffiliation\Large\@author}}
   
 \newcommand{\lsCollectionPaperCitation}{\scalebox{1.2}{
-  \includegraphics{\logopath/langsci_spinelogo_nocolor.pdf}}%
+  \includegraphics{\logopath langsci_spinelogo_nocolor.pdf}}%
   \hspace{0.8em}%
   \parbox[b]{.85\textwidth}{\linespread{0.8}\small\normalfont\lsCollectionPaperCitationText}}
   
