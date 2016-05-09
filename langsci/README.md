@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%   Project: langsci
 %%    Author: Language Science Press (http://langsci-press.org)
-%%      Date: 2016-04-26 10:13:33 UTC
+%%      Date: 2016-05-09 11:11:11 UTC
 %%   Purpose: publishing boks with Language Science Press.
 %% Languages: LaTeX, tikz, eps
 %%  Copyright 2012- Language Science Press
@@ -39,12 +39,11 @@
 Here you find files to produce books for Language Science Press
 
 The main file is the file langscibook.cls. This defines the basic structure of the book. It makes reference to the following auxiliary files:
-- `series.def`: metadata for series
-- `colors.def`: colors used by the series
+- `langsci-series.def`: metadata for series
+- `langsci-colors.def`: colors used by the series
 - `langsci-basic.sty` for commands required by the standard template
 - bib style definitions
-- eps files for the logos used in the textbook series Textbooks in Language Sciences
-- the file `logo.pdf` as a dummy, to be replaced with a file for the hosting institution
+- eps files for the logos used in the textbook series Textbooks in Language Sciences 
 - a file for an advertisement added to the very last page in tikz
 
 The following optional packages are also provided, but have to be included manually if desired:
