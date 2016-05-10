@@ -766,7 +766,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \usepackage{xcolor}
-\input{\seriesinfopath series.def} % \lsSeriesColor, \lsSeriesTitle, \lsISSN and colors are defined here
+\input{\seriesinfopath langsci-series.def} % \lsSeriesColor, \lsSeriesTitle, \lsISSN and colors are defined here
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
@@ -1233,8 +1233,8 @@ is, or will remain, accurate or appropriate.
 \iflsBiblatex	% BibLaTeX
 	\usepackage[
 		natbib=true,
-		style=\bstpath biblatex-sp-unified,
-		citestyle=\bstpath sp-authoryear-comp,
+		style=\bstpath biblatex-langsci-unified,
+		citestyle=\bstpath langsci-authoryear-comp,
 		%refsection=chapter,
 		maxbibnames=99,
 		isbn=false,

@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%   Project: langsci
 %%    Author: Language Science Press (http://langsci-press.org)
-%%      Date: 2016-05-09 11:11:11 UTC
+%%      Date: 2016-05-10 11:11:11 UTC
 %%   Purpose: publishing boks with Language Science Press.
 %% Languages: LaTeX, tikz, eps
 %%  Copyright 2012- Language Science Press
@@ -22,7 +22,7 @@
 %% - series.def: metadata for series
 %% - colors.def: colors used by the series
 %% - langsci-basic.sty for commands required by the standard template
-%% - bib style definitions langsci-unified.bst, biblatex-sp-unified.bbx, sp-authoryear-comp.cbx
+%% - bib style definitions langsci-unified.bst, biblatex-langsci-unified.bbx, langsci-authoryear-comp.cbx
 %% - files for the logos used in the textbook series Textbooks in Language Sciences: book.eps  bulb.eps  glass.eps  law.eps
 %% - the file logo.pdf as a dummy, to be replaced with a file for the hosting institution
 %% - a file advertisement.tex added to the very last page in tikz
