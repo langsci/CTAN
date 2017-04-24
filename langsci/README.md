@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%   Project: langsci
 %%    Author: Language Science Press (http://langsci-press.org)
-%%      Date: 2016-05-10 11:11:11 UTC
+%%      Date: 2017-04-24 11:11:11 UTC
 %%   Purpose: publishing boks with Language Science Press.
 %% Languages: LaTeX, tikz, eps
 %%  Copyright 2012- Language Science Press
@@ -22,15 +22,18 @@
 %% - series.def: metadata for series
 %% - colors.def: colors used by the series
 %% - langsci-basic.sty for commands required by the standard template
-%% - bib style definitions langsci-unified.bst, biblatex-langsci-unified.bbx, langsci-authoryear-comp.cbx
-%% - files for the logos used in the textbook series Textbooks in Language Sciences: book.eps  bulb.eps  glass.eps  law.eps
+%% - bib style definitions langsci-unified.bst, biblatex-langsci-unified.bbx, langsci-authoryear-comp.cbx, biblatex-langsci-unified-undecap.bbx
+%% - files for the logos used in the textbook series Textbooks in Language Sciences: tbls-book.eps  tbls-bulb.eps  tbls-glass.eps  tbls-law.eps
 %% - the file logo.pdf as a dummy, to be replaced with a file for the hosting institution
 %% - a file advertisement.tex added to the very last page in tikz
 %% - langsci-optional.sty: additional useful commands
 %% - langsci-gb4e.sty and langsci-cgloss.sty: typeset linguistic examples
 %% - langsci-forest-setup.sty: definitions for linguistic trees
 %% - langsci-bidi.sty: bidirectional text
-%% - langsci-tbls.sty: macros for the textbook series Textbooks in Language Sciences
+%% - langsci-tbls.sty: macros for the textbook series Textbooks in Language Sciencesjambox.sty
+%% - langsci-glyphs.sty: some workarounds for Libertine font limitations
+%% - langsci-linguex.sty: a version of linguex which does not break gb4e
+%% - langsci-subparts.sty: adds an additional sectioning level between part and chapter
 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -48,10 +51,13 @@ The main file is the file langscibook.cls. This defines the basic structure of t
 
 The following optional packages are also provided, but have to be included manually if desired:
 - `langsci-optional.sty`: additional useful commands
-- `langsci-gb4e.sty` and langsci-cgloss.sty typeset linguistic examples
+- `langsci-gb4e.sty` and `langsci-cgloss.sty` typeset linguistic examples
+- `langsci-linguex.sty`: a version of linguex which does not break gb4e
 - `langsci-forest-setup.sty`: definitions for linguistic trees
 - `langsci-bidi.sty`: bidirectional text
-- `langsci-tbls.sty`: macros for the textbook series Textbooks in Language Sciences
+- `langsci-tbls.sty`: macros for the textbook series Textbooks in Language Sciences 
+- `langsci-glyphs.sty`: some shortcuts for font workarounds
+- `langsci-subparts.sty`: adds an additional sectioning level between part and chapter
 
 Documentation is found in the folder `documentation/`.
 

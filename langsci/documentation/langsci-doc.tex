@@ -1,7 +1,6 @@
 \documentclass[%
-modfonts,
 output=guidelines,
-guidelines]{langscibook}
+guidelines]{../langscibook}
 \author{Sebastian Nordhoff} 
 \title{The \texttt{langscibook} {\LaTeX} class}
 \subtitle{}
@@ -41,7 +40,7 @@ This document describes the {\LaTeX} class langscibook.cls. This class is used f
 \chapter{The class}
 The class is loaded via \verb+\documentclass{langscibook}+. The standard use case is the creation of a book. If used without an \texttt{output=} option, the option \texttt{output=book} is loaded. The class can also be used to create dust jackets for books with different measurements via the output option values 
 \texttt{covercreatespace} (for \url{http://www.createspace.com}) and
-\texttt{coverbod} (for \url{http://www.bod.de}).
+\texttt{coverbodsc/coverbodhc} (for \url{http://www.bod.de}).
 
 The class provides for the following:
 \begin{itemize}
@@ -78,6 +77,9 @@ A couple of additional style files come with the class. Documents using this cla
 %  \item \texttt{langsci-lgr.sty}: 
  \item \texttt{langsci-tbls.sty}: Package for the textbook series Textbooks in Language Sciences
  \item \texttt{langsci-bidi.sty}: Package for typesetting right-to-left text
+%  \item \texttt{langsci-glyphs.sty}: some shortcuts for font workarounds
+%  \item \texttt{langsci-subparts.sty}: adds an additional sectioning level between part and chapter
+
 \end{itemize}
 
 \section{Colors and series definitions}
@@ -87,7 +89,7 @@ The metadata for Language Science Press book series are stored in the file \text
 The easiest way to start a book is to download the skeletons from \url{http://langsci-press.org/templatesAndTools}. Sample documents for monographs, edited volumes and chapters in edited volumes are provided in the folder \texttt{samples/} as well. 
 
 \section{Creating a monograph}
-Load the class. Make sure the following metadata values are set, either as options or with the metadata commands listed in \sectref{sec:metadatacommands}:
+Load the class. Make sure the following metadata values are set with the metadata commands listed in \sectref{sec:metadatacommands}:
 
 \begin{itemize}
  \item author 
@@ -115,7 +117,7 @@ Provide the following additional information if necessary:
 
  
 \section{Creating an edited volume}
-Proceed as for a monograph, but use the option \texttt{collection}. Use \verb+\author+ for the editor(s). You may want to use the further options \texttt{collectionchapter} and \texttt{collectiontoclong}. Chapters are included via \verb+\includepaper{}+. Set the bibliography resource for all papers in the main file. 
+Proceed as for a monograph, but use the option \texttt{collection}. Use \verb+\author+ for the editor(s). Use the option \texttt{multiauthors} if there is more than one editor. You may want to use the further options \texttt{collectionchapter} and \texttt{collectiontoclong}. Chapters are included via \verb+\includepaper{}+. Set the bibliography resource for all papers in the main file. 
 
 
 \section{Creating a paper for an edited volume}
@@ -126,15 +128,14 @@ Use the output option \texttt{paper}. Provide the following metadata in the prea
  \item \verb+\abstract+ (optional) 
 \end{itemize}
 
-You might want to redefine \verb+\rohead+ for chapters with very long titles. 
+You might want to use \verb+\shorttitlerunninghead+ for chapters with very long titles. 
 
  
 \chapter{Creating a dust jacket}
-Use the option \texttt{coverbod} or \texttt{covercreatespace}. Set the lengths  \verb+\bodspine+ and \verb+\csspine+. For \texttt{covercreatespace} set the further output option \texttt{coverus} if desired. Run {\XeLaTeX} twice. Upload to the respective websites to see whether the lengths were chosen correctly. 
+Use the option \texttt{coverbodhc}, \texttt{coverbodsc} or \texttt{covercreatespace} and set the option \texttt{spinewidth}. Run {\XeLaTeX} twice. Upload to the respective websites to see whether the lengths were chosen correctly. 
 
 \chapter{Options}
-The class has flag options to toggle certain behaviour and string options to set metadata values. 
-The metadata values can all also be set via the metadata commands listed in \sectref{sec:metadatacommands}.
+The class has flag options to toggle certain behaviour and string options to set metadata values.  
 
 \section{Flag options}
 % \option{blackandwhite}
@@ -143,39 +144,36 @@ The metadata values can all also be set via the metadata commands listed in \sec
 % \option{smallfont}
 % use 10pt as fontsize
 % {false  
-\option{draftmode}{Switch to draft mode (adds: draft stamp, indication of overlong lines, date)}{false} 
-\option{openreview}{Switch to open review mode}{false}
 % \option{noindex}
 % remove index}
 % {false  
-\option{nonflat}{Use elaborate directory structure. If set to true, fonts, packages etc will be loaded from subfolders. If set to false, they will be loaded from the working directory}{false}  
-\option{modfonts}{Use modified fonts provided by Language Science Press}{false}  
-\option{showindex}{Show indexed terms in margin}{false}
 \option{biblatex}{Use Bib\LaTeX}{true}
 \option{bibtex}{Use Bibtex}{false}  
-\option{newtxmath}{Switch math fonts to newtxmath}{false}
 \option{collection}{Make the book an edited volume}{false}  
 \option{collectionchapter}{Add numeric chapter prefix to each contribution.}{false}
-\option{collectiontoclong}{More detailed table of content in edited volumes}{false}
-\option{coverus}{Use \texttt{isbnsoftcoverus} instead of \texttt{isbnsoftcover} if \texttt{output=covercreatespace}}{false}
+\option{collectiontoclong}{More detailed table of content in edited volumes}{false} 
+\option{draftmode}{Switch to draft mode (adds: draft stamp, indication of overlong lines, date)}{false} 
+\option{openreview}{Switch to open review mode}{false}
+\option{modfonts}{Use modified fonts provided by Language Science Press}{false}  
+\option{multiauthors}{Set editor suffix to eds. instead of ed.}{false}
+\option{newtxmath}{Switch math fonts to newtxmath}{false}
+\option{nobabel}{Do not use the Babel package in the class}{false}
+\option{nonflat}{Use elaborate directory structure. If set to true, fonts, packages etc will be loaded from subfolders. If set to false, they will be loaded from the working directory}{false}  
+\option{showindex}{Show indexed terms in margin}{false}
+\option{smallfont}{Use a smaller font for books above 500 pages}{false}
+\option{undecapitalize}{Do not decapitalize titles in the list of references}{false}
 
-\section{String options}
-\option{number}{Number of the book within the series}{"??"}
-\option{issn}{ISSN of the series this book will appear in}{"??"}
-\option{isbndigital}{The ISBN of the digital release}{"000-0-000000-00-0"}
-\option{isbnsoftcover}{The ISBN of the soft cover release}{"000-0-000000-00-0"}
-\option{isbnsoftcoverus}{The ISBN of the US version of soft cover release (used for distribution to US academic institutions)}{"000-0-000000-00-0"}
-\option{isbnhardcover}{The ISBN of the hard cover release}{"000-0-000000-00-0"}
-\option{url}{The URL of the book }{"http://langsci-press.org/catalog"}
-\option{series}{The series code (see \texttt{series.def} for a list of acronyms)}{"eotms"}
+\section{String options} 
 \option{output}{Different output formats}{book}
 \begin{itemize}
 \item \texttt{book}: The book with frontcover and backcover 
 \item \texttt{inprep}: Mark manuscript as in preparation
 \item \texttt{paper}: Contribution to edited volume
 \item \texttt{guidelines}: Choose color grey; condense frontmatter
-\item \texttt{coverbod}: Create a two-page wide cover  (back-spine-front) for use with BoD
+\item \texttt{coverbodsc}: Create a two-page wide cover  (back-spine-front) for use with BoD hardcover books
+\item \texttt{coverbodsc}: Create a two-page wide cover  (back-spine-front) for use with BoD softcover books
 \item \texttt{covercreatespace}: Create a two-page wide cover  (back-spine-front) for use with CreateSpace 
+\item \texttt{spinewidth}{The width of the spine (for cover creation)}
 \end{itemize}
 \option{copyright}{The license chosen}{"CC-BY"}
 \option{biblatexbackend}{The backend of BibLaTeX}{"bibtex"}
@@ -205,7 +203,7 @@ Alternative: \texttt{biber}
 
 
 \section{Metadata commands}\label{sec:metadatacommands}
-The following commands are used to indicated metadata. These commands can override the options passed to the class.
+The following commands are used to indicated metadata.  
 
 \option{$\backslash$BackBody}{Text to be printed on the back cover}{Europan lingues es membres del sam familie. Lor separat existentie es un
 myth. Por scientie, musica, sport etc, litot Europa usa li sam vocabular. Li lingues differe solmen in li grammatica, li pronunciation e li plu commun vocabules. Omnicos directe al desirabilite de un nov lingua franca: On refusa continuar payar custosi traductores.}
@@ -218,7 +216,7 @@ myth. Por scientie, musica, sport etc, litot Europa usa li sam vocabular. Li lin
 \option{$\backslash$ISBNsoftcover}{ISBN for the softcover version}{000-0-000000-00-0}
 \option{$\backslash$ISBNsoftcoverus}{ISBN for the softcover version (US distribution)}{000-0-000000-00-0}
 \option{$\backslash$Series}{The series this book appears in. Use the acronyms found in \texttt{series.def}}{eotms} 
-\option{$\backslash$SeriesNumber}{Number of the book in the series}{??} 
+\option{$\backslash$SeriesNumber}{Position of the book in its series}{??} 
 \option{$\backslash$URL}{The URL where this title can be downloaded}{http://langsci-press.org/catalog} 
 
 
@@ -231,15 +229,14 @@ The following commands allow to override further default settings:
 \section{Command redefinitions}
 Redefine the following commands to further alter the appearance:
 
-\option{$\backslash$lsAdvertisement}{specify the advertisement on the last page of the book}{$\backslash$include\{$\backslash$logopath didyoulikethisbook\}}
+\option{$\backslash$lsAdvertisement}{Specify the advertisement on the last page of the book}{$\backslash$include\{$\backslash$logopath didyoulikethisbook\}}
 \option{$\backslash$lsBackBodyFont}{Font used for text on back cover}{\textrm{main font}} 
 \option{$\backslash$lsBackTitleFont}{Font used for title on back cover}{$\backslash$sffamily$\backslash$addfontfeatures{Scale=MatchUppercase}\\$\backslash$fontsize\{25pt\}\{10mm\}$\backslash$selectfont}
 \option{$\backslash$lsCopyright}{Choice of licence}{CC-BY}
 \option{$\backslash$lsCoverAuthorFont}{Font for author/editor on cover}{$\backslash$fontsize\{25pt\}\{12.5mm\}$\backslash$selectfont}
-\option{$\backslash$lsCoverSubTitleFont}{Font for the subtitle}{$\backslash$sffamily$\backslash$addfontfeatures\{Scale=MatchUppercase\}\\
-$\backslash$fontsize\{25pt\}\{10mm\}$\backslash$selectfont}
-% \option{$\backslash$lsCoverTitleFont 
-\option{$\backslash$lsEditorPrefix}{How editors are indicated on title page. Useful for localization.}{{$\backslash$LARGE Edited by}\\} 
+\option{$\backslash$lsCoverSubTitleFont}{Font for the subtitle}{$\backslash$sffamily$\backslash$addfontfeatures\{Scale=MatchUppercase\}\\ $\backslash$fontsize\{25pt\}\{10mm\}$\backslash$selectfont}
+\option{$\backslash$lsCoverTitleFont}{Font for the title}{$\backslash$sffamily$\backslash$addfontfeatures{Scale=MatchUppercase}\\ $\backslash$fontsize{52pt}{17.25mm}$\backslash$selectfont}
+\option{$\backslash$lsEditorPrefix}{How editors are indicated on title page. Useful for localization.}{{$\backslash$LARGE Edited by$\backslash$$\backslash$}}
 \option{$\backslash$lsFontsize}{size of main font}{11pt}
 \option{$\backslash$lsImpressumCitationText}{custom citation text, useful for including notes etc.}{\textrm{computed from author and title fields}} 
 \option{$\backslash$lsISSN}{ISSN of the series}{??}
