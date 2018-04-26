@@ -15,7 +15,7 @@
 \proofreader{John Doe}
 \BackBody{What everyone should know about monographs: it's here} 
 
-\bibliography{localbibliography} 
+\bibliography{langsci-test}
 \begin{document}     
 \maketitle                
 \frontmatter
@@ -28,11 +28,12 @@
 \chapter{Introduction}
 This is the introduction.
 \chapter{New research}
-This is the main argument.
+This is the main argument \citep{Chomsky1957}.
 \chapter{Conclusion}
 This is the conclusion.
 
 \backmatter
+\sloppy
 \phantomsection%this allows hyperlink in ToC to work
 \printbibliography[heading=references] 
 \cleardoublepage
