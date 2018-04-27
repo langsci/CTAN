@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%   Project: langsci
 %%    Author: Language Science Press (http://langsci-press.org)
-%%      Date: 2017-09-25 11:11:11 UTC
+%%      Date: 2018-04-27 11:11:11 UTC
 %%   Purpose: publishing boks with Language Science Press.
 %% Languages: LaTeX, tikz, eps
 %%  Copyright 2012- Language Science Press
@@ -19,19 +19,20 @@
 %%
 %% This work consists of the files 
 %% - langscibook.cls: class file
-%% - series.def: metadata for series
-%% - colors.def: colors used by the series
+%% - langsci-series.def: metadata for series
+%% - langsci-colors.def: colors used by the series
 %% - langsci-basic.sty for commands required by the standard template
 %% - bib style definitions langsci-unified.bst, biblatex-langsci-unified.bbx, langsci-authoryear-comp.cbx, biblatex-langsci-unified-undecap.bbx
 %% - files for the logos used in the textbook series Textbooks in Language Sciences: tbls-book.eps  tbls-bulb.eps  tbls-glass.eps  tbls-law.eps
-%% - the file logo.pdf as a dummy, to be replaced with a file for the hosting institution
+%% - the file storagelogo.pdf as a dummy, to be replaced with a file for the hosting institution
 %% - a file advertisement.tex added to the very last page in tikz
 %% - langsci-optional.sty: additional useful commands
 %% - langsci-gb4e.sty and langsci-cgloss.sty: typeset linguistic examples
 %% - langsci-forest-setup.sty: definitions for linguistic trees
 %% - langsci-bidi.sty: bidirectional text
-%% - langsci-tbls.sty: macros for the textbook series Textbooks in Language Sciencesjambox.sty
+%% - langsci-tbls.sty: macros for the textbook series Textbooks in Language Sciences
 %% - langsci-glyphs.sty: some workarounds for Libertine font limitations
+%% - langsci-lgr.sty: shortcuts for the Leipzig Glossing Rules
 %% - langsci-linguex.sty: a version of linguex which does not break gb4e
 %% - langsci-subparts.sty: adds an additional sectioning level between part and chapter
 %%
