@@ -82,8 +82,8 @@ A couple of additional style files come with the class. Documents using this cla
 
 \end{itemize}
 
-\section{Colors and series definitions}
-The metadata for Language Science Press book series are stored in the file \texttt{langsci-series.def}. This file loads the file \texttt{langsci-colors.def} to set the colors for the cover and title font. Both files should be safe to use for all books of well-established series. For new series, the ISSN field of \texttt{langsci-series.def} might have to be updated. 
+\section{Series definitions}
+The metadata for LangSci book series are stored in   \texttt{langsci-series.def}.  For new series, the ISSN field of \texttt{langsci-series.def} might have to be updated. 
 
 \chapter{Creating a book}
 The easiest way to start a book is to download the skeletons from \url{http://langsci-press.org/templatesAndTools}. Sample documents for monographs, edited volumes and chapters in edited volumes are provided in the folder \texttt{examples/} as well. 
@@ -131,6 +131,24 @@ Use the output option \texttt{paper}. Provide the following metadata in the prea
 
 You might want to use \verb+\shorttitlerunninghead+ for chapters with very long titles. 
 
+Papers can be compiled standalone. You can use the command \verb+\papernote+ in the preamble of the paper to adjust the text displayed in the footer.  This can be embedded in a conditional as follows (assuming your chapter source file is in a subfolder of the folder containing your main file): 
+\begin{verbatim}
+\IfFileExists{../samplevolume.tex}{%adjust to name of your master file
+  \papernote{\scriptsize\normalfont 
+    To appear in: 
+    Change Volume Editor.  
+    Change volume title.  
+    Berlin: Language Science Press. [preliminary page numbering]
+  }
+  \pagenumbering{roman}
+  \setcounter{chapter}{23}%adjust the chapter number
+  \addtocounter{chapter}{-1}
+}{}
+\end{verbatim}
+
+This will set your chapter number to 23 when compiled standalone (rather than 1) and will display text in the chapter footer.
+
+
  
 \chapter{Creating a dust jacket}
 Use the option \texttt{coverbodhc}, \texttt{coverbodsc} or \texttt{covercreatespace} and set the option \texttt{spinewidth}. Run {\XeLaTeX} twice. Upload to the respective websites to see whether the lengths were chosen correctly. 
@@ -163,6 +181,11 @@ The class has flag options to toggle certain behaviour and string options to set
 \option{showindex}{Show indexed terms in margin}{false}
 \option{smallfont}{Use a smaller font for books above 500 pages}{false}
 % \option{undecapitalize}{Do not decapitalize titles in the list of references}{false}
+\option{chinesefont}{Load fonts for Chinese and update font info in colophon}{false}
+\option{japanesefont}{Load fonts for Japanese and update font info in colophon}{false}
+\option{hebrewfont}{Load fonts for Hebrew and update font info in colophon}{false}
+\option{arabicfont}{Load fonts for Arabic and update font info in colophon}{false}
+\option{syriacfont}{Load fonts for Syriac and update font info in colophon}{false}
 
 \section{String options} 
 \option{output}{Different output formats}{book}
@@ -193,21 +216,23 @@ myth. Por scientie, musica, sport etc, litot Europa usa li sam vocabular. Li lin
 \option{$\backslash$BookDOI}{DOI for the book}{??}
 \option{$\backslash$ChapterDOI}{DOI for a chapter}{??}
 \option{$\backslash$dedication}{A dedication}{\textrm{void}}
-\option{$\backslash$ISBNdigital}{ISBN for the digital version}{000-0-000000-00-0}
-\option{$\backslash$ISBNhardcover}{ISBN for the hardcover version}{000-0-000000-00-0}
-\option{$\backslash$ISBNsoftcover}{ISBN for the softcover version}{000-0-000000-00-0}
-\option{$\backslash$ISBNsoftcoverus}{ISBN for the softcover version (US distribution)}{000-0-000000-00-0}
-\option{$\backslash$Series}{The series this book appears in. Use the acronyms found in \texttt{series.def}}{eotms} 
-\option{$\backslash$SeriesNumber}{Position of the book in its series}{??} 
-\option{$\backslash$URL}{The URL where this title can be downloaded}{http://langsci-press.org/catalog} 
-
+\option{$\backslash$lsISBNdigital}{ISBN for the digital version}{000-0-000000-00-0}
+\option{$\backslash$lsISBNhardcover}{ISBN for the hardcover version}{000-0-000000-00-0}
+\option{$\backslash$lsISBNsoftcover}{ISBN for the softcover version}{000-0-000000-00-0}
+% \option{$\backslash$lsISBNsoftcoverus}{ISBN for the softcover version (US distribution)}{000-0-000000-00-0}
+\option{$\backslash$lsSeries}{The series this book appears in. Use the acronyms found in \texttt{langsci-series.def}}{eotms} 
+\option{$\backslash$lsSeriesNumber}{Position of the book in its series}{??} 
+\option{$\backslash$lsID}{The numerical LangSci ID, used for various URLs}{000} 
  
 \section{Overrides}
 The following commands allow to override further default settings:
 
 \option{$\backslash$SpineAuthor}{Custom author on spine. Useful for long lists of authors/editors}{\textrm{same as on cover}} 
 \option{$\backslash$SpineTitle}{Custom title on spine. Useful for long titles}{\textrm{same as on cover}} 
-
+\option{$\backslash$lsImpressionCitationAuthor}{How the author name should be displayed in the impressum}{\rmfamily Automatically inferred from \texttt{$\backslash$author\{\}}, but sometimes things go wrong}
+\option{$\backslash$lsImpressionCitationText}{Customize the full citation as displayed in the colophon. Useful for second editions}{\rmfamily Automatically inferred from \texttt{$\backslash$author\{\}} and \texttt{$\backslash$title\{\}}}
+\option{$\backslash$papernote}{Text displayed in the footer of chapters}{\rmfamily Automatically inferred from volume and chapter metadata}
+\option{$\backslash$lsChapterFooterSize}{Font size for chapter footers}{\texttt{$\backslash$small}}
 \section{Command redefinitions}
 Redefine the following commands to further alter the appearance:
 
@@ -219,17 +244,21 @@ Redefine the following commands to further alter the appearance:
 \option{$\backslash$lsCoverSubTitleFont}{Font for the subtitle}{$\backslash$sffamily$\backslash$addfontfeatures\{Scale=MatchUppercase\}\\ $\backslash$fontsize\{25pt\}\{10mm\}$\backslash$selectfont}
 \option{$\backslash$lsCoverTitleFont}{Font for the title}{$\backslash$sffamily$\backslash$addfontfeatures{Scale=MatchUppercase}\\ $\backslash$fontsize{52pt}{17.25mm}$\backslash$selectfont}
 \option{$\backslash$lsEditorPrefix}{How editors are indicated on title page. Useful for localization.}{{$\backslash$LARGE Edited by$\backslash$$\backslash$}}
+\option{$\backslash$lsEditorSuffix}{How editors are indicated in the colophon}{(ed.)/(eds.)\rmfamily, depending on the value of the option \texttt{multiauthors}}
 \option{$\backslash$lsFontsize}{size of main font}{11pt}
 \option{$\backslash$lsImpressumCitationText}{custom citation text, useful for including notes etc.}{\textrm{computed from author and title fields}} 
 \option{$\backslash$lsISSN}{ISSN of the series}{??}
+
+\option{$\backslash$lsSubjectIndexTitle}{The title of the subject index. Change this for non-English works}{Subject index}
 \option{$\backslash$lsLanguageIndexTitle}{The title of the language index. Change this for non-English works}{Language index} 
 \option{$\backslash$lsNameIndexTitle}{The title of the name index. Change this for non-English works}{Name index} 
 \option{$\backslash$lsSpineAuthorFont}{Font for the author on the spine}{$\backslash$fontsize\{16pt\}\{14pt\}$\backslash$selectfont}
 \option{$\backslash$lsSpineTitleFont}{Font for the title on the spine}{$\backslash$sffamily$\backslash$fontsize\{18pt\}\{14pt\}$\backslash$selectfont}
 \option{$\backslash$lsSubjectIndexTitle}{The title of the subject index. Change this for non-English works}{Subject index} 
-\option{$\backslash$lsYear}{$\backslash$the$\backslash$year}
+\option{$\backslash$lsYear}{Year of publication}{$\backslash$the$\backslash$year}
 \section{Additions}
 \option{$\backslash$lsAdditionalFontsImprint}{Add additional fonts to the list of fonts in the colophon}{\textrm{void}}
+\option{$\backslash$lsImpressumExtra}{for legal notes required for revised theses}{void} 
 
 
 \end{document}
