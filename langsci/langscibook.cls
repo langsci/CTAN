@@ -120,10 +120,10 @@
 \newcommand{\SpineAuthor}[1]{\renewcommand{\lsSpineAuthor}{#1}}
 
 % Default commands for loaded graphics
-\newcommand{\includespinelogo}{\includegraphics{\logopath langsci_spinelogo_nocolor}}
-\newcommand{\includestoragelogo}{\includegraphics[width=5cm]{\logopath storagelogo.pdf}}
-\newcommand{\includepublisherlogo}{\includegraphics{\logopath langsci_logo_nocolor.pdf}}
-\newcommand{\includechapterfooterlogo}{\includegraphics{\logopath langsci_spinelogo_nocolor.pdf}}
+\newcommand{\includespinelogo}{~}
+\newcommand{\includestoragelogo}{~}
+\newcommand{\includepublisherlogo}{~}
+\newcommand{\includechapterfooterlogo}{~}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -779,7 +779,7 @@
 
     \newcommand{\lsCoverTitleFontSize}{52pt}
     \newcommand{\lsCoverTitleFontBaselineskip}{17.25mm}
-    \newcommand{\CoverTitleSizes}[2]{\renewcommand{\lsCoverTitleFontSize}{#1}\renewcommand{\lsCoverTitleFontBaselineskip}{#2}}
+    \newcommand{\lsCoverTitleSizes}[2]{\renewcommand{\lsCoverTitleFontSize}{#1}\renewcommand{\lsCoverTitleFontBaselineskip}{#2}}
     \newcommand{\lsCoverTitleFont}[1]{\sffamily\addfontfeatures{Scale=MatchUppercase}\fontsize{\lsCoverTitleFontSize}{17.25mm}\selectfont #1}
     \newcommand{\lsCoverSubTitleFont}{\sffamily\addfontfeatures{Scale=MatchUppercase}\fontsize{25pt}{10mm}\selectfont}
     \newcommand{\lsCoverAuthorFont}{\fontsize{25pt}{12.5mm}\selectfont}
@@ -944,7 +944,7 @@
 
 %\usepackage{pdfpages}
 \newcommand{\lsAdvertisement}{%
-  \include{\logopath langsci-advertisement}
+  \include{langsci-advertisement}
 }
 
 \newcommand{\lsBackPage}{%
@@ -1109,10 +1109,10 @@ This title can be downloaded at:\\
 \newcommand{\ccby}{CC-BY}
 \ifx\lsCopyright\ccby
 Published under the Creative Commons Attribution 4.0 Licence (CC BY 4.0):
-http://creativecommons.org/licenses/by/4.0/ \includegraphics[height=.75em]{\logopath/ccby.pdf}
+http://creativecommons.org/licenses/by/4.0/ \includegraphics[height=.75em]{ccby.pdf}
 \else
 Published under the Creative Commons Attribution-NoDerivatives 4.0 Licence (CC BY-ND 4.0):
-http://creativecommons.org/licenses/by-nd/4.0/ \includegraphics[height=.75em]{\logopath/ccbynd.pdf}
+http://creativecommons.org/licenses/by-nd/4.0/ \includegraphics[height=.75em]{ccbynd.pdf}
 \fi
 
 {\lsImpressumExtra}
@@ -1960,7 +1960,7 @@ width=.8\textwidth
   \includechapterfooterlogo}%
   % \hspace{0.8em}%
   \hfill%
-  \parbox[b]{.87\textwidth}{\linespread{0.8}\lsChapterFooterSize\normalfont\lsCollectionPaperCitationText \includegraphics[height=.75em]{\logopath/ccby.pdf}}}
+  \parbox[b]{.87\textwidth}{\linespread{0.8}\lsChapterFooterSize\normalfont\lsCollectionPaperCitationText \includegraphics[height=.75em]{ccby.pdf}}}
 \ifx\lsOutput\lsOutputPaper       % only if output==paper
 	\renewcommand{\lsCollectionPaperCitation}{Change with \string\papernote}
 \fi
