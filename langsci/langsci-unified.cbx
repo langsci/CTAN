@@ -1,8 +1,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%      File: langscibook.cls
-%%    Author: Language Science Press (http://langsci-press.org)
-%%      Date: 2019-03-06 13:12 UTC
-%%   Purpose: An implementation of the Unified Style Sheet for Linguistics bibliographies (https://www.linguisticsociety.org/resource/unified-style-sheet). 
-%%  This work is based on the styles provided by Semantics \& Pragmatics 
+%%  Author: Language Science Press (http://langsci-press.org)
+%%  Date: 2020-03-17 13:12 UTC
+%%  Purpose: An implementation of the Unified Style Sheet for Linguistics bibliographies (https://www.linguisticsociety.org/resource/unified-style-sheet).
+%%  This work is based on the styles provided by Semantics \& Pragmatics
 %%  Language: LaTeX
 %%  Copyright 2017- Language Science Press
 %%  Licence: This work may be distributed and/or modified under the
@@ -293,7 +293,7 @@
    \usebibmacro{textcite}}
   {}
   {\usebibmacro{textcite:postnote}}
-  
+
 % "This volume" citation commands
 \DeclareCiteCommand{\citetv}
   {\usebibmacro{prenote}}
@@ -303,7 +303,7 @@
    \printtext[bibhyperref]{\printnames{labelname}\addspace\printfield{year}}}
   {\multicitedelim}
   {\printtext[bibhyperref]{\usebibmacro{postnote}\addspace[this volume]}}
-  
+
 \DeclareCiteCommand{\textcitetv}
   {\usebibmacro{prenote}}
   {\ifciteindex
@@ -312,7 +312,7 @@
    \printtext[bibhyperref]{\printnames{labelname}\addspace\bibopenparen\printfield{year}}}
   {\multicitedelim}
   {\printtext[bibhyperref]{\usebibmacro{postnote}\addspace[this volume]\bibcloseparen}}
-  
+
 \DeclareCiteCommand{\parencitetv}
   {\usebibmacro{prenote}}
   {\ifciteindex
