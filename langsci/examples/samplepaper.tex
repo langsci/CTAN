@@ -9,19 +9,20 @@
 Abstract goes here
 }
 
-\IfFileExists{../samplevolume.tex}{%adjust to name of your master file
-  \bibliography{langsci-test}
-  \papernote{\scriptsize\normalfont
-    To appear in:
-    Change Volume Editor.
-    Change volume title.
-    Berlin: Language Science Press. [preliminary page numbering]
-  }
-  \pagenumbering{roman}
-  \setcounter{chapter}{23}%adjust the chapter number
-  \addtocounter{chapter}{-1}
-}{}
+% \IfFileExists{../samplevolume.tex}{%adjust to name of your master file
+%   \bibliography{langsci-test}
+%   \papernote{\scriptsize\normalfont
+%     To appear in:
+%     Change Volume Editor.
+%     Change volume title.
+%     Berlin: Language Science Press. [preliminary page numbering]
+%   }
+%   \pagenumbering{roman}
+%   \setcounter{chapter}{23}%adjust the chapter number
+%   \addtocounter{chapter}{-1}
+% }{}
 
+\bibliography{langsci-test}
 \begin{document}
 
 \maketitle
@@ -52,6 +53,7 @@ Sed cursus eros condimentum mi consectetur, ac consectetur sapien pulvinar. Sed 
 \section*{Abbreviations}
 \section*{Acknowledgements}
 
+\sloppy
 \printbibliography[heading=subbibliography,notkeyword=this]
 
 \end{document}
