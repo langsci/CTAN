@@ -83,6 +83,7 @@
 \usepackage{xspace}
 \newcommand{\lsp}{Language Science Press\xspace}
 \newcommand{\lsSeriesNumber}{??}
+\newcommand{\lsSeriesText}{\color{red}{No series description provided}}
 \newcommand{\lsISSN}{??}
 \newcommand{\lsISSNprint}{??}
 \newcommand{\lsISSNelectronic}{??}
@@ -120,10 +121,10 @@
 \newcommand{\SpineAuthor}[1]{\renewcommand{\lsSpineAuthor}{#1}}
 
 % Default commands for loaded graphics
-\newcommand{\includespinelogo}{}
+\newcommand{\includespinelogo}{~}
 \newcommand{\includestoragelogo}{~}
-\newcommand{\includepublisherlogo}{}
-\newcommand{\includechapterfooterlogo}{}
+\newcommand{\includepublisherlogo}{~}
+\newcommand{\includechapterfooterlogo}{~}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -475,21 +476,13 @@
   \lsSchmutztitel}
   %%%%%%%%%%%%%%%%%%%%
   \AtEndDocument{
-    \lsPageStyleEmpty
-    \null\newpage\thispagestyle{empty}
-    %% Advertisement:
-%     {\lsAdvertisement}
-    \null\newpage\thispagestyle{empty}
-    %% Back page:
-    {\lsBackPage}
-    \null\newpage\thispagestyle{empty}
+        \lsPageStyleEmpty
+        \null\newpage\thispagestyle{empty} % add a final blank page
   }
 \fi
 
 \ifx\lsOutput\lsOutputGuidelines        % only if output==guidelines
   {\setcounter{page}{-1}
-%   \renewcommand{\lsAdvertisement}{}
-  %% First titlepage:
   {\lsFrontPage}
   }
 
@@ -982,9 +975,10 @@
 \color{black}
 \raggedright\lsCoverSeriesHistoryFont
 
-\IfFileExists{./\lsSeries-info.tex}{\input{./\lsSeries-info}}{
-  Series information:  \lsSeries-info.tex not found!}
+% \IfFileExists{./\lsSeries-info.tex}{\input{./\lsSeries-info}}{
+%   Series information:  \lsSeries-info.tex not found!}
 
+{\lsSeriesText}
 \IfStrEq{\lsISSNprint}{??}   % \IfStrEq from xstring
   {}
   {\vfill\hfill ISSN (print): \lsISSNprint\\
