@@ -1,12 +1,11 @@
 \documentclass[%
-output=guidelines,
-guidelines]{langscibook}
+output=guidelines]{../langscibook}
 \author{Sebastian Nordhoff}
 \title{The \texttt{langscibook} {\LaTeX} class}
 \subtitle{}
 \renewcommand{\lsSeries}{guidelines}
 \renewcommand{\lsSeriesNumber}{~}
-\renewcommand{\lsAdvertisement}{}
+% \renewcommand{\lsAdvertisement}{}
 % \BackTitle{}
 % \BackBody{}
 % \dedication{}
@@ -52,7 +51,6 @@ The class provides for the following:
  \item chapters
  \item list of references (per chapter or global)
  \item name index, subject index, language index
- \item advertisement
  \item back title
  \item ISBN
  \item DOI (per book and per chapter)
@@ -70,15 +68,15 @@ A couple of additional style files come with the class. Documents using this cla
 
 \begin{itemize}
  \item \texttt{langsci-basic.sty}: Commands used in all Language Science Press books
+ \item \texttt{langsci-bidi.sty}: Package for typesetting right-to-left text
  \item \texttt{langsci-optional.sty}: Further commands useful for some typical books
- \item \texttt{langsci-gb4e.sty}: Package for linguistic examples
  \item \texttt{langsci-cgloss.sty}: Helper package for \texttt{langsci-gb4e}
+ \item \texttt{langsci-gb4e.sty}: Package for linguistic examples
  \item \texttt{langsci-forest-setup.sty}: Set up the forest package for linguistic trees
 %  \item \texttt{langsci-lgr.sty}:
  \item \texttt{langsci-tbls.sty}: Package for the textbook series Textbooks in Language Sciences
- \item \texttt{langsci-bidi.sty}: Package for typesetting right-to-left text
 %  \item \texttt{langsci-glyphs.sty}: some shortcuts for font workarounds
-%  \item \texttt{langsci-subparts.sty}: adds an additional sectioning level between part and chapter
+ \item \texttt{langsci-subparts.sty}: adds an additional sectioning level between part and chapter
 
 \end{itemize}
 
@@ -124,7 +122,7 @@ Proceed as for a monograph, but use the option \texttt{collection}. Use \verb+\a
 \section{Creating a paper for an edited volume}
 Use the output option \texttt{paper}. Provide the following metadata in the preamble:
 \begin{itemize}
- \item \verb+\author+ with (\verb+\affiliation+)
+ \item \verb+\author+ (with \verb+\affiliation+)
  \item \verb+\title+
  \item \verb+\abstract+ (optional)
 \end{itemize}
@@ -176,9 +174,9 @@ The class has flag options to toggle certain behaviour and string options to set
 % \option{modfonts}{Use modified fonts provided by Language Science Press}{false}
 \option{multiauthors}{Set editor suffix to eds. instead of ed.}{false}
 \option{minimal}{Load a very bare class optimized for compilation speed}{false}
-\option{newtxmath}{Switch math fonts to newtxmath}{false}
+% \option{newtxmath}{Switch math fonts to newtxmath}{false}
 \option{nobabel}{Do not use the Babel package in the class}{false}
-\option{nonflat}{Use elaborate directory structure. If set to true, fonts, packages etc will be loaded from subfolders. If set to false, they will be loaded from the working directory}{false}
+% \option{nonflat}{Use elaborate directory structure. If set to true, fonts, packages etc will be loaded from subfolders. If set to false, they will be loaded from the working directory}{false}
 \option{showindex}{Show indexed terms in margin}{false}
 \option{smallfont}{Use a smaller font for books above 500 pages}{false}
 % \option{undecapitalize}{Do not decapitalize titles in the list of references}{false}
@@ -194,6 +192,7 @@ The class has flag options to toggle certain behaviour and string options to set
 \item \texttt{book}: The book with frontcover and backcover
 % \item \texttt{inprep}: Mark manuscript as in preparation
 \item \texttt{paper}: Contribution to edited volume
+\item \texttt{minimal}: Optimise for speed. Some features might not work. Useful for drafts.
 \item \texttt{guidelines}: Choose color grey; condense frontmatter
 \item \texttt{coverbodhc}: Create a two-page wide cover  (back-spine-front) for use with BoD hardcover books
 \item \texttt{coverbodsc}: Create a two-page wide cover  (back-spine-front) for use with BoD softcover books
@@ -237,10 +236,10 @@ The following commands allow to override further default settings:
 \option{{\textbackslash}papernote}{Text displayed in the footer of chapters}{\rmfamily Automatically inferred from volume and chapter metadata}
 \option{{\textbackslash}lsChapterFooterSize}{Font size for chapter footers}{\texttt{{\textbackslash}small}}
 
-\option{{\textbackslash}includespinelogo}{The logo to be put on the spine}{{\textbackslash}includegraphics\{{\textbackslash}logopath langsci\_spinelogo\_nocolor\}}
-\option{{\textbackslash}includestoragelogo}{The logo of the archiving institution}{{\textbackslash}includegraphics[width=5cm]\{{\textbackslash}logopath storagelogo.pdf\}}
-\option{{\textbackslash}includepublisherlogo}{The publisher's logo in the impressum}{{\textbackslash}includegraphics\{{\textbackslash}logopath langsci\_logo\_nocolor.pdf\}}
-\option{{\textbackslash}includechapterfooterlogo}{The logo to be used in chapter footers}{{\textbackslash}includegraphics\{{\textbackslash}logopath langsci\_spinelogo\_nocolor.pdf\}}
+\option{{\textbackslash}includespinelogo}{The logo to be put on the spine}{void}
+\option{{\textbackslash}includestoragelogo}{The logo of the archiving institution}{void}
+\option{{\textbackslash}includepublisherlogo}{The publisher's logo in the impressum}{void}
+\option{{\textbackslash}includechapterfooterlogo}{The logo to be used in chapter footers}{void}
 
 \option{{\textbackslash}publisherstreetaddress}{the physical address of the publisher}{LangSci Berlin address}
 \option{{\textbackslash}publisherurl}{The web address of the publisher}{\textbackslash href\{http://langsci-press.org\}\{langsci-press.org\}}
@@ -253,7 +252,6 @@ The following commands allow to override further default settings:
 Redefine the following commands to further alter the appearance:
 
 \option{{\textbackslash}CoverTitleSizes}{Set custom fontsize \#1 and baselineskip \#2 for title on cover}{52pt, 16.75mm}
-\option{{\textbackslash}lsAdvertisement}{Specify the advertisement on the last page of the book}{{\textbackslash}include\{{\textbackslash}logopath didyoulikethisbook\}}
 \option{{\textbackslash}lsBackBodyFont}{Font used for text on back cover}{\textrm{main font}}
 \option{{\textbackslash}lsBackTitleFont}{Font used for title on back cover}{{\textbackslash}sffamily{\textbackslash}addfontfeatures{Scale=MatchUppercase}\\{\textbackslash}fontsize\{25pt\}\{10mm\}{\textbackslash}selectfont}
 \option{{\textbackslash}lsCopyright}{Choice of licence}{CC-BY}
