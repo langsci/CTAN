@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%      File: langsci-gb4e.sty
 %%    Author: Language Science Press (http://langsci-press.org)
-%%      Date: 2020-03-17 13:12 UTC
+%%      Date: 2016-01-16 16:47:43 UTC
 %%   Purpose: This file contains an adapted version of the gb4e package
 %%            for typetting linguistic examples. It also includes
 %%            adapted versions of the cgloss and jambox packages
@@ -19,7 +19,7 @@
 \toggletrue{jambox}
 \DeclareOption{nocgloss}{\togglefalse{cgloss}}
 \DeclareOption{nojambox}{\togglefalse{jambox}}
-\DeclareOption*{\PackageWarning{examplepackage}{Unknown option ‘\CurrentOption’}}
+\DeclareOption*{\PackageWarning{langsci-gb4e}{Unknown option ‘\CurrentOption’}}
 \ProcessOptions\relax
 
 % \def\gbVersion{4e}
@@ -79,7 +79,7 @@
 
 
 
-\@ifundefined{new@fontshape}{\def\reset@font{}\let\mathrm\rm\let\mathit\mit}{}
+% \@ifundefined{new@fontshape}{\def\reset@font{}\let\mathrm\rm\let\mathit\mit}{} %%deprecate this
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -242,7 +242,7 @@
 \def\exe{%
     %\ifnum\value{equation}>9 \exewidth{(23)}\else\fi%
     %inserted by LangSci, for large example numbers
-    \ifnum\value{equation}>98 \exewidth{(235)}\else\fi%
+    \ifnum\value{equation}>998 \exewidth{(1235)}\else\ifnum\value{equation}>98 \exewidth{(235)}\fi\fi%
     \@ifnextchar [{\@exe}{\@exe[\@exwidth]}}
 
 \def\@exe[#1]{\ifnum \@xnumdepth >0%
@@ -255,8 +255,7 @@
                  \if@noftnote%
                         \begin{list}{(\thexnumi)}%
                         {\usecounter{xnumi}\@subex{#1}{\@gblabelsep}{0em}%
-                        \setcounter{xnumi}{\value{equation}}
-                        \nopagebreak}%
+                        \setcounter{xnumi}{\value{equation}}}%
                  \else%
                         \begin{list}{(\roman{xnumi})}%
                         {\usecounter{xnumi}\@subex{(iiv)}{\@gblabelsep}{\footexindent}%
@@ -313,7 +312,7 @@
 %%% the example-items
 \def\ex{\@ifnextchar [{\@ex}{\item}}
 \def\@ex[#1]#2{\item\@exj[#1]{#2}}
-\def\@exj[#1]#2{\@exjbg{#1} #2 \end{list}\nopagebreak}
+\def\@exj[#1]#2{\@exjbg{#1} #2 \end{list}}
 \def\exi#1{\item[#1]\@ifnextchar [{\@exj}{}}
 \def\judgewidth#1{\def\@jwidth{#1}}
 \judgewidth{??}

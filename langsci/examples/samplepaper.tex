@@ -1,28 +1,29 @@
 \documentclass[output=paper]{langscibook}
 \title{Introduction}
 \author{%
- Chap ter Author\affiliation{University of Eden}\and
- Noam Chimpsky\affiliation{University of Pluto}\lastand
+ Chap ter Author\affiliation{University of Eden} and
+ Noam Chimpsky\affiliation{University of Pluto} and
  Jane Wilson\affiliation{National Institute for Language}
 }
 \abstract{
 Abstract goes here
 }
 
-\IfFileExists{../main.tex}{%adjust to name of your master file
-  \bibliography{langsci-test}
-  \papernote{\scriptsize\normalfont
-    To appear in:
-    Change Volume Editor.
-    Change volume title.
-    Berlin: Language Science Press. [preliminary page numbering]
-  }
-  \pagenumbering{roman}
-  \setcounter{chapter}{23}%adjust the chapter number
-  \addtocounter{chapter}{-1}
-}{}
+% \IfFileExists{../main.tex}{%adjust to name of your master file
+% \IfFileExists{samplevolume.tex}{
+%   \bibliography{langsci-test}
+%   \papernote{\scriptsize\normalfont
+%     To appear in:
+%     Change Volume Editor.
+%     Change volume title.
+%     Berlin: Language Science Press. [preliminary page numbering]
+%   }
+%   \pagenumbering{roman}
+%   \setcounter{chapter}{23}%adjust the chapter number
+%   \addtocounter{chapter}{-1}
+% }{}
 
-
+% \usepackage{langsci-optional}
 \begin{document}
 
 \maketitle
@@ -38,12 +39,12 @@ Sed nisi urna, dignissim sit amet posuere ut, luctus ac lectus. Fusce vel ornare
 \caption{Frequencies of word classes}
 \label{tab:1:frequencies}
  \begin{tabular}{lrrrr}
-  \lsptoprule
+%   \lsptoprule
             & nouns & verbs & adjectives & adverbs\\
   \midrule
   absolute  &   12 &    34  &    23     & 13\\
   relative  &   3.1 &   8.9 &    5.7    & 3.2\\
-  \lspbottomrule
+%   \lspbottomrule
  \end{tabular}
 \end{table}
 
