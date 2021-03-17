@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Project: langsci
 %% Author: Language Science Press (http://langsci-press.org)
-%% Date: 2020-03-17 11:11:11 UTC
+%% Date: 2021-03-17 11:11:11 UTC
 %% Purpose: publishing boks with Language Science Press.
 %% Languages: LaTeX, tikz, eps
 %% Copyright 2012- Language Science Press
@@ -27,9 +27,9 @@
 %% tbls-pencil.pdf, tbls-people.pdf, tbls-plus.pdf, tbls-receipt.pdf,
 %% tbls-refresh.pdf, tbls-report.pdf, tbls-r.pdf, tbls-test.pdf, tbls-tree.pdf,
 %% tbls-book.eps tbls-bulb.eps tbls-glass.eps tbls-law.eps
+%% - langsci-affiliations.sty:  Parse author affiliations
 %% - langsci-basic.sty for commands required by the standard template
 %% - langsci-bidi.sty: bidirectional text
-%% - langsci-forest-setup.sty: definitions for linguistic trees
 %% - langsci-gb4e.sty and langsci-cgloss.sty: typeset linguistic examples
 %% - langsci-lgr.sty: shortcuts for the Leipzig Glossing Rules
 %% - langsci-linguex.sty: a version of linguex which does not break gb4e
@@ -37,8 +37,6 @@
 %% - langsci-subparts.sty: adds an additional sectioning level between part and chapter
 %% - langsci-tbls.sty: macros for the textbook series Textbooks in Language Sciences
 %% - langsci-textipa.sty: provide some Unicode replacements for TIPA phonetic commands
-%% - langsci-tikz.sty: provide some custom commands
-%% - langsci-tobi.sty: provide commands for Tone and Break indices (ToBI)
 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -48,20 +46,20 @@ Here you find files to produce books for Language Science Press
 The main file is the file langscibook.cls. This defines the basic structure of the book. It makes reference to the following auxiliary files:
 
     langsci-series.def: metadata for series
-    langsci-basic.sty for commands required by the standard template
     bib style definitions
     eps and pdf files for the logos used in the textbook series Textbooks in Language Sciences
 
 The following optional packages are also provided, but have to be included manually if desired:
 
+    langsci-basic.sty to set the branding to Language Science Press
     langsci-optional.sty: additional useful commands
     langsci-gb4e.sty and langsci-cgloss.sty typeset linguistic examples
     langsci-linguex.sty: a version of linguex which does not break gb4e
     langsci-lgr.sty: the Leipzig glossing rule definitions
-    langsci-forest-setup.sty: definitions for linguistic trees
     langsci-bidi.sty: bidirectional text
     langsci-tbls.sty: macros for the textbook series Textbooks in Language Sciences
     langsci-subparts.sty: adds an additional sectioning level between part and chapter
+    langsci-textipa.sty: provide some Unicode replacements for TIPA phonetic commands
 
 
 Documentation is found in the folder documentation/.
