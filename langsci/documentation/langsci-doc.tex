@@ -1,5 +1,4 @@
-\documentclass[%
-output=guidelines,guidelines]{langscibook}
+\documentclass[output=guidelines]{langscibook}
 \author{Sebastian Nordhoff}
 \title{The \texttt{langscibook} {\LaTeX} class}
 \subtitle{}
@@ -57,8 +56,6 @@ The class provides for the following:
  \item DOI (per book and per chapter)
 \end{itemize}
 
-% When used to create dust jackets, the class will produce a large pdf with a collation of backcover, spine and frontcover, from left to right, surrounded by bleed.
-
 
 \chapter{Requirements}
 \section{Fonts}
@@ -68,19 +65,13 @@ The class uses the fonts Libertinus, Arimo and Dejavu. These have to be present 
 A couple of additional style files come with the class. Documents using this class will compile without them, but in order to typeset books for Language Science Press, these packages should be loaded as well. These packages are
 
 \begin{itemize}
- \item \texttt{langsci-basic.sty}: Commands used in all Language Science Press books
  \item \texttt{langsci-affiliations.sty}: Parse author affiliations
  \item \texttt{langsci-bidi.sty}: Package for typesetting right-to-left text
- \item \texttt{langsci-optional.sty}: Further commands useful for some typical books
- \item \texttt{langsci-cgloss.sty}: Helper package for \texttt{langsci-gb4e}
  \item \texttt{langsci-gb4e.sty}: Package for linguistic examples
-%  \item \texttt{langsci-glyphs.sty}: some shortcuts for font workarounds
-%  \item \texttt{langsci-forest-setup.sty}: Set up the forest package for linguistic trees
  \item \texttt{langsci-lgr.sty}: The glosses defined in the Leipzig Glossing Rules
+ \item \texttt{langsci-optional.sty}: Further commands useful for some typical books
  \item \texttt{langsci-subparts.sty}: adds an additional sectioning level between part and chapter
  \item \texttt{langsci-tbls.sty}: Package for the textbook series Textbooks in Language Sciences
- \item \texttt{langsci-textipa.sty}: Unicode renderings of some common TIPA glyphs
-
 \end{itemize}
 
 \section{Series definitions}
@@ -107,20 +98,20 @@ Provide the following additional information if necessary:
  \item blurb (back body)
  \item subtitle
  \item backtitle
- \item spine title
- \item spine author
+%  \item spine title
+%  \item spine author
  \item dedication
  \item list of proofreaders
  \item list of typesetters
  \item list of illustrators
  \item license other than CC-BY
  \item list of additional fonts
+ %FIXME more commands
 \end{itemize}
 
 
 \section{Creating an edited volume}
 Proceed as for a monograph, but use the option \texttt{collection}. Use \verb+\author+ for the editor(s). Use the option \texttt{multiauthors} if there is more than one editor.
-%You may want to use the further options \texttt{collectionchapter} and \texttt{collectiontoclong}.
 Chapters are included via \verb+\includepaper{}+. Set the bibliography resource for all papers in the main file.
 
 
@@ -151,40 +142,17 @@ Papers can be compiled standalone. You can use the command \verb+\papernote+ in 
 
 This will set your chapter number to 23 when compiled standalone (rather than 1) and will display text in the chapter footer.
 
-
-
-% \chapter{Creating a dust jacket}
-% Use the option \texttt{coverbodhc}, \texttt{coverbodsc} or \texttt{covercreatespace} and set the option \texttt{spinewidth}. Run {\XeLaTeX} twice. Upload to the respective websites to see whether the lengths were chosen correctly.
-
 \chapter{Options}
 The class has flag options to toggle certain behaviour and string options to set metadata values.
 
 \section{Flag options}
-% \option{blackandwhite}
-% Remove all colors}
-% {false
-% \option{smallfont}
-% use 10pt as fontsize
-% {false
-% \option{noindex}
-% remove index}
-% {false
-% \option{biblatex}{Use Bib\LaTeX}{true}
-% \option{bibtex}{Use Bibtex}{false}
 \option{collection}{Make the book an edited volume}{false}
-% \option{collectionchapter}{Add numeric chapter prefix to each contribution.}{false}
-% \option{collectiontoclong}{More detailed table of content in edited volumes}{false}
 \option{draftmode}{Switch to draft mode (adds: draft stamp, indication of overlong lines, date)}{false}
 \option{openreview}{Switch to open review mode}{false}
-% \option{modfonts}{Use modified fonts provided by Language Science Press}{false}
 \option{multiauthors}{Set editor suffix to eds. instead of ed.}{false}
 \option{minimal}{Load a very bare class optimized for compilation speed}{false}
-% \option{newtxmath}{Switch math fonts to newtxmath}{false}
 \option{nobabel}{Do not use the Babel package in the class}{false}
-% \option{nonflat}{Use elaborate directory structure. If set to true, fonts, packages etc will be loaded from subfolders. If set to false, they will be loaded from the working directory}{false}
 \option{showindex}{Show indexed terms in margin}{false}
-% \option{smallfont}{Use a smaller font for books above 500 pages}{false}
-% \option{undecapitalize}{Do not decapitalize titles in the list of references}{false}
 \option{chinesefont}{Load fonts for Chinese and update font info in colophon}{false}
 \option{japanesefont}{Load fonts for Japanese and update font info in colophon}{false}
 \option{hebrewfont}{Load fonts for Hebrew and update font info in colophon}{false}
@@ -195,22 +163,13 @@ The class has flag options to toggle certain behaviour and string options to set
 \option{output}{Different output formats}{book}
 \begin{itemize}
 \item \texttt{book}: The book with frontcover and backcover
-% \item \texttt{inprep}: Mark manuscript as in preparation
 \item \texttt{paper}: Contribution to edited volume
-\item \texttt{minimal}: Optimise for speed. Some features might not work. Useful for drafts.
+\item \texttt{minimal}: Optimised for speed. Some features might not work. Useful for drafts.
 \item \texttt{guidelines}: Choose color grey; condense frontmatter
-% \item \texttt{coverbodhc}: Create a two-page wide cover  (back-spine-front) for use with BoD hardcover books
-% \item \texttt{coverbodsc}: Create a two-page wide cover  (back-spine-front) for use with BoD softcover books
-% \item \texttt{covercreatespace}: Create a two-page wide cover  (back-spine-front) for use with CreateSpace
 \end{itemize}
 
-% \option{spinewidth}{The width of the spine (for cover creation)}{20mm}
 \option{booklanguage}{Load babel for the specified language and change the custom headers for list of references and indexes}{english}
-\option{copyright}{The license chosen}{"CC-BY"}
-% \option{biblatexbackend}{The backend of BibLaTeX}{"biber"}
-% Alternative: \texttt{biber}
-
-
+\option{copyright}{The license chosen}{CC-BY}
 
 \section{Metadata commands}\label{sec:metadatacommands}
 The following commands are used to indicated metadata.
@@ -224,18 +183,15 @@ myth. Por scientie, musica, sport etc, litot Europa usa li sam vocabular. Li lin
 \option{{\textbackslash}lsISBNdigital}{ISBN for the digital version}{000-0-000000-00-0}
 \option{{\textbackslash}lsISBNhardcover}{ISBN for the hardcover version}{000-0-000000-00-0}
 \option{{\textbackslash}lsISBNsoftcover}{ISBN for the softcover version}{000-0-000000-00-0}
-% \option{{\textbackslash}lsISBNsoftcoverus}{ISBN for the softcover version (US distribution)}{000-0-000000-00-0}
 \option{{\textbackslash}lsSeries}{The series this book appears in. Use the acronyms found in \texttt{langsci-series.def}}{eotms}
 \option{{\textbackslash}lsSeriesNumber}{Position of the book in its series}{??}
 \option{{\textbackslash}lsID}{The numerical LangSci ID, used for various URLs}{000}
-
+%FIXME more metadata
 
 
 \section{Overrides}
 The following commands allow to override further default settings:
 
-\option{{\textbackslash}SpineAuthor}{Custom author on spine. Useful for long lists of authors/editors}{\textrm{same as on cover}}
-\option{{\textbackslash}SpineTitle}{Custom title on spine. Useful for long titles}{\textrm{same as on cover}}
 \option{{\textbackslash}lsImpressionCitationAuthor}{How the author name should be displayed in the impressum}{\rmfamily Automatically inferred from \texttt{{\textbackslash}author\{\}}, but sometimes things go wrong}
 \option{{\textbackslash}lsImpressionCitationText}{Customize the full citation as displayed in the colophon. Useful for second editions}{\rmfamily Automatically inferred from \texttt{{\textbackslash}author\{\}} and \texttt{{\textbackslash}title\{\}}}
 \option{{\textbackslash}papernote}{Text displayed in the footer of chapters}{\rmfamily Automatically inferred from volume and chapter metadata}
@@ -246,11 +202,12 @@ The following commands allow to override further default settings:
 \option{{\textbackslash}includepublisherlogo}{The publisher's logo in the impressum}{void}
 \option{{\textbackslash}includechapterfooterlogo}{The logo to be used in chapter footers}{void}
 
-\option{{\textbackslash}publisherstreetaddress}{the physical address of the publisher}{LangSci Berlin address}
-\option{{\textbackslash}publisherurl}{The web address of the publisher}{\textbackslash href\{http://langsci-press.org\}\{langsci-press.org\}}
-\option{{\textbackslash}storageinstitution}{Where the book is archive}{FU Berlin}
-\option{{\textbackslash}githubtext}{Where the tex code of the book can be found}{Source code available from\newline {\textbackslash}href\{https://www.github.com/langsci/{\textbackslash}lsID\}\{www.github.com/langsci/{\textbackslash}lsID\}}
-\option{{\textbackslash}paperhivetext}{Where the book can be found on PaperHive}{Collaborative~reading:\newline{\textbackslash}href\{https://paperhive.org/documents/remote?type=langsci\&id={\textbackslash}lsID\}\%\newline\{paperhive.org/documents/remote?type=langsci\&id={\textbackslash}lsID\}}
+\option{{\textbackslash}publisherstreetaddress}{the physical address of the publisher}{void}
+\option{{\textbackslash}publisherurl}{The web address of the publisher}{void}
+\option{{\textbackslash}storageinstitution}{Where the book is archived}{void}
+\option{{\textbackslash}githubtext}{Where the tex code of the book can be found}{void}
+\option{{\textbackslash}paperhivetext}{Where the book can be found on PaperHive}{void}
+\option{{\textbackslash}lsURL}{Where the book can be found on the publisher's site}{void}
 
 
 \section{Command redefinitions}
@@ -265,19 +222,13 @@ Redefine the following commands to further alter the appearance:
 \option{{\textbackslash}lsCoverTitleFont}{Font for the title}{{\textbackslash}sffamily{\textbackslash}addfontfeatures{Scale=MatchUppercase}\\ {\textbackslash}fontsize{52pt}{17.25mm}{\textbackslash}selectfont}
 \option{{\textbackslash}lsEditorPrefix}{How editors are indicated on title page. Useful for localization.}{{{\textbackslash}LARGE Edited by{\textbackslash}{\textbackslash}}}
 \option{{\textbackslash}lsEditorSuffix}{How editors are indicated in the colophon}{(ed.)/(eds.)\rmfamily, depending on the value of the option \texttt{multiauthors}}
-\option{{\textbackslash}lsFontsize}{size of main font}{11pt}
-\option{{\textbackslash}lsImpressumCitationText}{custom citation text, useful for including notes etc.}{\textrm{computed from author and title fields}}
-\option{{\textbackslash}lsISSN}{ISSN of the series}{??}
 
 \option{{\textbackslash}lsLanguageIndexTitle}{The title of the language index. Change this for non-English works}{Language index}
 \option{{\textbackslash}lsNameIndexTitle}{The title of the name index. Change this for non-English works}{Name index}
-\option{{\textbackslash}lsSpineAuthorFont}{Font for the author on the spine}{{\textbackslash}fontsize\{16pt\}\{14pt\}{\textbackslash}selectfont}
-\option{{\textbackslash}lsSpineTitleFont}{Font for the title on the spine}{{\textbackslash}sffamily{\textbackslash}fontsize\{18pt\}\{14pt\}{\textbackslash}selectfont}
 \option{{\textbackslash}lsSubjectIndexTitle}{The title of the subject index. Change this for non-English works}{Subject index}
 \option{{\textbackslash}lsYear}{Year of publication}{{\textbackslash}the{\textbackslash}year}
+
 \section{Additions}
 \option{{\textbackslash}lsAdditionalFontsImprint}{Add additional fonts to the list of fonts in the colophon}{\textrm{void}}
-\option{{\textbackslash}lsImpressumExtra}{for legal notes required for revised theses ("... in fulfillment of ... ")}{void}
-
-
+\option{{\textbackslash}lsImpressumExtra}{for legal notes required for revised theses (``... in fulfillment of ...'')}{void}
 \end{document}
