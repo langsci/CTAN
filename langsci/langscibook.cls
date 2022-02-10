@@ -1,6 +1,7 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%      File: langscibook.cls
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%      
+%%      File: langscibook.cls
 %%    Author: Language Science Press (http://langsci-press.org)
-%%      Date: 2021-02-17 18:00 CET
+%%      Date: 2022-02-08 14:00 CET
 %%   Purpose: This file defines the basic document class
 %%            for books published with Language Science Press.
 %%  Language: LaTeX
@@ -14,7 +15,7 @@
 %%  version 2005/12/01 or later.
 %%% This work has the LPPL maintenance status `maintained'.
 %%% The Current Maintainer of this work is Sebastian Nordhoff.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Structure of this file:
 %   \- Early load packages
 %   \- Default values of variables
@@ -45,12 +46,12 @@
 %   \- Hyperref
 %   \- Edited volumes (Collection)
 %   \- Localisation
-%   \_ Miscellaneous
+%   \- Miscellaneous
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{langscibook}[2021/02/17 Language Science Press]
+\ProvidesClass{langscibook}[2022/02/08 Language Science Press]
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %    Early load packages
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -124,7 +125,7 @@
 \newcommand{\includestoragelogo}{~}
 \newcommand{\includepublisherlogo}{~}
 \newcommand{\includechapterfooterlogo}{~}
-
+\newcommand{\lsLicenseInformation}[1]{~}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %     Conditionals
@@ -905,6 +906,15 @@
 \newcommand{\lsCoverFontColor}{white}
 \newcommand{\lsCoverBlockColor}{\lsSeriesColor}
 
+\ExplSyntaxOn
+\NewDocumentCommand{\lsDetermineMultiauthors}{}
+  {%
+    \int_compare:nNnTF
+        {\g__affiliations_num_authors_int} > {1}
+        {\booltrue{multiauthors}} {\boolfalse{multiauthors}}
+  }
+\ExplSyntaxOff
+
 \newcommand{\lsEditorPrefix}{}
 \newcommand{\lsEditorSuffix}{}
 \ifbool{collection}{
@@ -913,9 +923,9 @@
     \renewcommand{\newlineSpine}{}
     \renewcommand{\lsEditorPrefix}{{\Large Edited by\\}}
     \renewcommand{\lsEditorSuffix}{(ed.)}
-      \ifbool{multiauthors}{
-	\renewcommand{\lsEditorSuffix}{(eds.)}
-      }{}
+    \CountAuthorsFromAffiliations{\@author}
+    \lsDetermineMultiauthors{}
+    \ifbool{multiauthors}{\renewcommand{\lsEditorSuffix}{(eds.)}}{}
   } %end AtBeginDocument
 }{} %end collection
 
@@ -1179,17 +1189,18 @@ This title can be downloaded at:\\
 
 \newcommand{\ccby}{CC-BY}
 \newcommand{\ccbynd}{CC-BY-ND}
+\newcommand{\ccbysa}{CC-BY-SA}
 \ifx\lsCopyright\ccby
 Published under the Creative Commons Attribution 4.0 Licence (CC BY 4.0):
-http://creativecommons.org/licenses/by/4.0/ \includegraphics[height=.75em]{ccby.pdf}
+http://creativecommons.org/licenses/by/4.0/ \lsLicenseInformation{ccby}
 \fi
 \ifx\lsCopyright\ccbynd
 Published under the Creative Commons Attribution-NoDerivatives 4.0 Licence (CC BY-ND 4.0):
-http://creativecommons.org/licenses/by-nd/4.0/ \includegraphics[height=.75em]{ccbynd.pdf}
+http://creativecommons.org/licenses/by-nd/4.0/ \lsLicenseInformation{ccbynd}
 \fi
-\ifx\lsCopyright\ccbynd
+\ifx\lsCopyright\ccbysa
 Published under the Creative Commons Attribution-ShareAlike 4.0 Licence (CC BY-SA 4.0):
-http://creativecommons.org/licenses/by-sa/4.0/ \includegraphics[height=.75em]{ccbysa.pdf}
+http://creativecommons.org/licenses/by-sa/4.0/ \lsLicenseInformation{ccbysa}
 \fi
 
 {\lsImpressumExtra}
@@ -1475,7 +1486,7 @@ Storage and cataloguing done by \storageinstitution\\[3ex]
 \newcommand{\lsBookLanguagePortuguese}{portuguese}
 \newcommand{\lsBookLanguageGerman}{german}
 \newcommand{\lsBookLanguageChinese}{chinese}
-\typeout{\lsBookLanguage}
+
 \notbool{babel}{
   \ifx\lsBookLanguage\lsBookLanguageChinese
 	    \usepackage{xeCJK}%Chinese doesn't load babel, but xeCJK.
@@ -1588,7 +1599,6 @@ Storage and cataloguing done by \storageinstitution\\[3ex]
 
 \usepackage{setspace}
 \usepackage{caption}
-% \captionsetup{labelfont=bf}
 \captionsetup{font={stretch=.8,small},width=.8\textwidth}
 \setcapindent{0pt}
 
@@ -1652,7 +1662,7 @@ Storage and cataloguing done by \storageinstitution\\[3ex]
   \parindent\z@
   \parskip\z@ \@plus .3\p@\relax
   \let\item\@idxitem
-  \providecommand*\seealso[2]{\emph{see also} ##1}
+  \providecommand*\seealso[2]{\emph{\lsSeeAlsoTerm{}} ##1}
 }{%
   \if@restonecol
 	  \onecolumn
@@ -1800,6 +1810,7 @@ Storage and cataloguing done by \storageinstitution\\[3ex]
 \providecommand{\partref}[1]{Part~\ref{#1}}
 \providecommand{\tabref}[1]{Table~\ref{#1}}
 \providecommand{\figref}[1]{Figure~\ref{#1}}
+\providecommand{\lsSeeAlsoTerm}{see also}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %    Collection (edited volume):
@@ -1844,11 +1855,11 @@ Storage and cataloguing done by \storageinstitution\\[3ex]
     \renewcommand{\@pnumwidth}{1.5em}	% width of page numbers
     \ifbool{collectiontoclong}{}{\setcounter{tocdepth}{0}}
     \DeclareTOCStyleEntry%Settings for parts in the TOC of collected volumes
-    [
+      [
         pagenumberbox={\csname @gobble\endcsname},
         raggedentrytext=true,
         linefill={\hfill}
-    ]{tocline}{part}
+      ]{tocline}{part}
 
     \usepackage{chngcntr}
     \counterwithin{figure}{chapter}
@@ -1965,7 +1976,7 @@ Storage and cataloguing done by \storageinstitution\\[3ex]
     \includechapterfooterlogo}%
     % \hspace{0.8em}%
     \hfill%
-    \parbox[b]{.87\textwidth}{\linespread{0.8}\lsChapterFooterSize\normalfont\lsCollectionPaperCitationText \includegraphics[height=.75em]{ccby.pdf}}
+    \parbox[b]{.87\textwidth}{\linespread{0.8}\lsChapterFooterSize\normalfont\lsCollectionPaperCitationText \lsLicenseInformation{ccby}}
 }
 
 \ifbool{paper}{
@@ -2011,6 +2022,7 @@ Storage and cataloguing done by \storageinstitution\\[3ex]
     \renewcommand{\partref}[1]{Partie~\ref{#1}}
     \renewcommand{\tabref}[1]{Tableau~\ref{#1}}
     \renewcommand{\figref}[1]{Figure~\ref{#1}}
+    \renewcommand{\lsSeeAlsoTerm}{voir aussi}
 \fi
 
 \ifx\lsBookLanguage\lsBookLanguageSpanish
@@ -2018,6 +2030,7 @@ Storage and cataloguing done by \storageinstitution\\[3ex]
     \renewcommand{\partref}[1]{Parte~\ref{#1}}
     \renewcommand{\tabref}[1]{Tabla~\ref{#1}}
     \renewcommand{\figref}[1]{Figura~\ref{#1}}
+    \renewcommand{\lsSeeAlsoTerm}{véase también}
 \fi
 
 \ifx\lsBookLanguage\lsBookLanguageGerman
@@ -2025,6 +2038,7 @@ Storage and cataloguing done by \storageinstitution\\[3ex]
     \renewcommand{\partref}[1]{Teil~\ref{#1}}
     \renewcommand{\tabref}[1]{Tabelle~\ref{#1}}
     \renewcommand{\figref}[1]{Abbildung~\ref{#1}}
+    \renewcommand{\lsSeeAlsoTerm}{siehe auch}
 \fi
 
 \ifx\lsBookLanguage\lsBookLanguagePortuguese
@@ -2032,6 +2046,7 @@ Storage and cataloguing done by \storageinstitution\\[3ex]
     \renewcommand{\partref}[1]{Parte~\ref{#1}}
     \renewcommand{\tabref}[1]{Tabela~\ref{#1}}
     \renewcommand{\figref}[1]{Figura~\ref{#1}}
+    \renewcommand{\lsSeeAlsoTerm}{ver tambem}
 \fi
 
 \ifx\lsBookLanguage\lsBookLanguageChinese

@@ -33,25 +33,25 @@ This is the conclusion.
 \backmatter
 \sloppy
 \phantomsection%this allows hyperlink in ToC to work
-\printbibliography[heading=references]
+\printbibliography[heading=\lsReferencesTitle]
 \cleardoublepage
 
 \phantomsection
 \addcontentsline{toc}{chapter}{Index}
-\addcontentsline{toc}{section}{Name index}
-\ohead{Name index}
+\addcontentsline{toc}{section}{\lsNameIndexTitle}
+\ohead{\lsNameIndexTitle}
 \printindex
 \cleardoublepage
 
 \phantomsection
-\addcontentsline{toc}{section}{Language index}
-\ohead{Language index}
+\addcontentsline{toc}{section}{\lsLanguageIndexTitle}
+\ohead{\lsLanguageIndexTitle}
 \printindex[lan]
 \cleardoublepage
 
 \phantomsection
-\addcontentsline{toc}{section}{Subject index}
-\ohead{Subject index}
+\addcontentsline{toc}{section}{\lsSubjectIndexTitle}
+\ohead{\lsSubjectIndexTitle}
 \printindex[sbj]
 \ohead{}
 
