@@ -32,7 +32,7 @@
 
 \mainmatter
 \chapter{Introduction}
-This document describes the {\LaTeX} class langscibook.cls. This class is used for typesetting books with Language Science Press. Language Science Press publish open access monographs and edited volumes in linguistics.
+This document describes the {\LaTeX} class langscibook.cls. This class is used for typesetting books with Language Science Press. Language Science Press publishes open access monographs and edited volumes in linguistics.
 
 
 \chapter{The class}
@@ -143,13 +143,12 @@ Papers can be compiled standalone. You can use the command \verb+\papernote+ in 
 This will set your chapter number to 23 when compiled standalone (rather than 1) and will display text in the chapter footer.
 
 \chapter{Options}
-The class has flag options to toggle certain behaviour and string options to set metadata values.
+The class has flag options to toggle certain behaviours and string options to set metadata values.
 
 \section{Flag options}
 \option{collection}{Make the book an edited volume}{false}
 \option{draftmode}{Switch to draft mode (adds: draft stamp, indication of overlong lines, date)}{false}
 \option{openreview}{Switch to open review mode}{false}
-\option{multiauthors}{Set editor suffix to eds. instead of ed.}{false}
 \option{minimal}{Load a very bare class optimized for compilation speed}{false}
 \option{nobabel}{Do not use the Babel package in the class}{false}
 \option{showindex}{Show indexed terms in margin}{false}
@@ -221,7 +220,7 @@ Redefine the following commands to further alter the appearance:
 \option{{\textbackslash}lsCoverSubTitleFont}{Font for the subtitle}{{\textbackslash}sffamily{\textbackslash}addfontfeatures\{Scale=MatchUppercase\}\\ {\textbackslash}fontsize\{25pt\}\{10mm\}{\textbackslash}selectfont}
 \option{{\textbackslash}lsCoverTitleFont}{Font for the title}{{\textbackslash}sffamily{\textbackslash}addfontfeatures{Scale=MatchUppercase}\\ {\textbackslash}fontsize{52pt}{17.25mm}{\textbackslash}selectfont}
 \option{{\textbackslash}lsEditorPrefix}{How editors are indicated on title page. Useful for localization.}{{{\textbackslash}LARGE Edited by{\textbackslash}{\textbackslash}}}
-\option{{\textbackslash}lsEditorSuffix}{How editors are indicated in the colophon}{(ed.)/(eds.)\rmfamily, depending on the value of the option \texttt{multiauthors}}
+\option{{\textbackslash}lsEditorSuffix}{How editors are indicated in the colophon}{(ed.)/(eds.)}
 
 \option{{\textbackslash}lsLanguageIndexTitle}{The title of the language index. Change this for non-English works}{Language index}
 \option{{\textbackslash}lsNameIndexTitle}{The title of the name index. Change this for non-English works}{Name index}

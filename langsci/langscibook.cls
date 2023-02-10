@@ -151,6 +151,8 @@
 \newbool{lsISBNTwoDigitAddon}
 \newbool{lsFloatCounterWithoutChapter}
     \booltrue{lsFloatCounterWithoutChapter}
+\newbool{lsImportPackagesWhenStandalone}
+\newbool{infn}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %     Option handling
@@ -249,13 +251,16 @@
   }
 }
 
+
 \DeclareVoidOption{arabicfont}
   {
-	\newfontfamily\arabicfont[Script=Arabic,ItalicFont=*,Scale=1.4]{arabtype.ttf}
-% 	\newcommand{\textarabic}[1]{{\arabicfont #1}}
+  \AtEndPreamble{
+        \newfontfamily\arabicfont[Script=Arabic,ItalicFont=*,Scale=1.4]{ScheherazadeRegOT_Jazm.ttf}
 	\AdditionalFontImprint{Arabtype}
+	\usepackage{langsci-bidi}
+%         \newcommand{\textarab}[1]{\RL{\arabicfont #1}} %has to be moved to localcommands
   }
-
+}
 \DeclareVoidOption{hebrewfont}
   {
 	\newfontfamily\hebrewfont[Script=Hebrew,ItalicFont=*, Scale=0.9]{SBLHebrew.ttf}
@@ -271,6 +276,7 @@
   }
 
 \DeclareVoidOption{tblseight}{\booltrue{tblseight}}
+\DeclareVoidOption{infn}{\booltrue{infn}}
 
 \ProcessKeyvalOptions*
 
@@ -308,7 +314,9 @@
     fontsize=\lsFontsize,% default is 11pt
     footnotes=multiple,
     numbers=noenddot,% no point after last number of chapters/sections
-    toc=bibliography,
+    \notbool{collection}{
+      toc=bib, % make bibliography appear in toc
+    }{}
     index=totoc,
     headings=optiontohead,
     footnotes=multiple
@@ -322,6 +330,7 @@
     \ifbool{paper}
       {% The same is applied to papers.
         \KOMAoptions{chapterprefix=true}
+        \booltrue{lsImportPackagesWhenStandalone}
       }
       {}
   }
@@ -499,6 +508,7 @@
 %we define a command to better encapsulate the logic
 \newcommand{\setuptitle}{%
     \renewcommand{\maketitle}{%first we treat covers to get them out of the way
+
         \ifbool{coverBODhc}{%
             \bodHCcover
             \end{document}
@@ -539,7 +549,6 @@
                 \null\newpage\thispagestyle{empty}
             }
             \end{titlepage}
-    %         \fi
         }{} %end book
 
         \ifbool{guidelines}{%
@@ -551,8 +560,6 @@
             \end{titlepage}
         }{} %end guidelines
 
-        % \null\newpage\thispagestyle{empty}
-        \hypersetup{colorlinks=false, citecolor=brown, pdfborder={0 0 0}}  % for hyperref
         \color{black}
         \lsInsideFont
 
@@ -608,6 +615,10 @@
         \fi
         
         \ifx\lsSeries\cogl
+        \let\eachwordone=\itshape
+        \fi
+        
+        \ifx\lsSeries\rcg
         \let\eachwordone=\itshape
         \fi
         
@@ -897,6 +908,9 @@
 % }
 
 \input{langsci-series.def}
+\ifbool{guidelines}
+  {\let\lsSeries\guidelines}
+  {}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %    Cover
@@ -911,7 +925,7 @@
   {%
     \int_compare:nNnTF
         {\g__affiliations_num_authors_int} > {1}
-        {\booltrue{multiauthors}} {\boolfalse{multiauthors}}
+        {\booltrue{multiauthors}} {}
   }
 \ExplSyntaxOff
 
@@ -1260,7 +1274,7 @@ ISBN: &
 Cover and concept of design:
 Ulrike Harbort \\
 \if\@translator\empty\else
-Translator:
+Translation:
 \@translator \\
 \fi
 \if\@typesetter\empty\else
@@ -1538,10 +1552,7 @@ Storage and cataloguing done by \storageinstitution\\[3ex]
 	autolang=hyphen,
 	\ifbool{resetcapitals}{language=english,}{}
 	backend=\lsBiblatexBackend,
-	indexing=cite,
-	\notbool{collection}{
-		toc=bib, % make bibliography appear in toc
-        }{}
+	indexing=cite
 ]{biblatex}
 
 %% DOIs are handled after hyperref.
@@ -1625,19 +1636,16 @@ Storage and cataloguing done by \storageinstitution\\[3ex]
 
 % For papers that have appendices, a replacement for \appendix.
 % Usage: \begin{paperappendix} \section{Title} ... \end{paperappendix}
-\newenvironment{paperappendix}{%
-    \newcommand*{\appendixmore}{%
-    \renewcommand*\thesection{\Alph{section}}
-    \renewcommand*{\sectionformat}{%
-    \appendixname~\thesection\autodot\enskip}%
-    \renewcommand*{\sectionmarkformat}{%
-    \appendixname~\thesection\autodot\enskip}}
-    \appendix
-}{}
+\newenvironment{paperappendix}
+  {%
+    \let\section\appendixsection
+    \let\subsection\appendixsubsection
+  }
+  {}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %    Indexes
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \usepackage{index} %% Wie im Stylefile, aber ohne \MakeUppercase
 \renewenvironment{theindex}{%
@@ -1683,15 +1691,25 @@ Storage and cataloguing done by \storageinstitution\\[3ex]
 \indexproofstyle{\setlength{\overfullrule}{0pt}\raggedright\footnotesize}
 
 %% \index inside footnote
-\def\infn#1#2{% 	\hyperpage{#2}n#1%  99n2
-% 	\hyperpage{#2}*%   99*
-	\hyperpage{#2}\textsuperscript{#1}%  99²
-}%
-\newcommand{\footnoteindex}[2]{\index{#2|infn{#1}}}
-\newcommand{\footnoteindex@sbj}[2]{\index[sbj]{#2|infn{#1}}}
-\newcommand{\footnoteindex@lan}[2]{\index[lan]{#2|infn{#1}}}
-\newcommand{\footnoteindex@wrd}[2]{\index[wrd]{#2|infn{#1}}}
-
+\ifbool{infn}{
+  \def\infn#1#2{% 	\hyperpage{#2}n#1%  99n2
+  % 	\hyperpage{#2}*%   99*
+          \hyperpage{#2}\textsuperscript{#1}%  99²
+  }%
+  \newcommand{\footnoteindex}[2]{\index{#2|infn{#1}}}
+  \newcommand{\footnoteindex@sbj}[2]{\index[sbj]{#2|infn{#1}}}
+  \newcommand{\footnoteindex@lan}[2]{\index[lan]{#2|infn{#1}}}
+  \newcommand{\footnoteindex@wrd}[2]{\index[wrd]{#2|infn{#1}}}
+}{%else
+  \def\infn#1#2{% 	\hyperpage{#2}n#1%  99n2
+  % 	\hyperpage{#2}*%   99*
+          \hyperpage{#2}\textsuperscript{#1}%  99²
+  }%
+  \newcommand{\footnoteindex}[2]{\index{#2}}
+  \newcommand{\footnoteindex@sbj}[2]{\index[sbj]{#2}}
+  \newcommand{\footnoteindex@lan}[2]{\index[lan]{#2}}
+  \newcommand{\footnoteindex@wrd}[2]{\index[wrd]{#2}}
+}
 
 % Author index
 \newcommand{\ia}[1]{%
@@ -1763,9 +1781,9 @@ Storage and cataloguing done by \storageinstitution\\[3ex]
 \newcommand{\name}[3][]{%add person names to text and author index
 #2 %output first name
 \ifstrempty{#1}{%if no optional argument present
-\ia{#3, #2@#3, #2}%add lastname, firstname to index
+\ia{#3, #2}%add lastname, firstname to index
 }{%if optional argument present
-\ia{#1@#1}% add optional argument to index
+\ia{#1}% add optional argument to index
 }%
 #3}%output last name in text
 
@@ -1774,16 +1792,17 @@ Storage and cataloguing done by \storageinstitution\\[3ex]
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \usepackage[
-	bookmarks=true,bookmarksopen=true,bookmarksopenlevel=1,%
+	bookmarks=true,bookmarksopen=true,bookmarksopenlevel=1,
 	bookmarksdepth=5,
 	bookmarksnumbered=true,
-	hyperindex=true,%
+	hyperindex=true,
 	breaklinks=true,
 	draft=false,
 	plainpages=false,
-	pdfusetitle=true,  % puts author and title in automatically, maybe only in final mode?
+	pdfborder={0 0 0},
+	pdfusetitle=true,
 	pdfkeywords={},
-	pdfpagelayout=TwoPageRight,   % first page is separate
+	pdfpagelayout=TwoPageRight,% first page is separate
 	hyperfootnotes=false,
 	%ps2pdf=true
 	]{hyperref}
@@ -1792,6 +1811,17 @@ Storage and cataloguing done by \storageinstitution\\[3ex]
 %% Failed to convert input string to UTF16
 %% http://tex.stackexchange.com/questions/66722/tex-live-2012-xelatex-moderncv-error-failed-to-convert-input-string-to-utf1
 \hypersetup{unicode,pdfencoding=auto,bookmarksopenlevel=0}
+
+%% Reset sections in the Backmatter to the top level.
+\usepackage{bookmark}
+\apptocmd{\backmatter}
+         {\bookmarksetup{startatroot}}
+         {}
+         {%
+           \AtEndDocument{\typeout{langscibook Warning:}
+                          \typeout{It was not possible to set option 'staratroot'}
+                          \typeout{for bookmarks in the backmatter.}}
+         }
 
 %% autoref (part of hyperref)
 \ifx\lsBookLanguage\lsBookLanguageEnglish
@@ -1999,6 +2029,18 @@ Storage and cataloguing done by \storageinstitution\\[3ex]
     \counterwithout{table}{chapter}
     \includepaper@body
 }{} %end paper
+
+
+% A command that imports the files localpackages.tex, but only if output==paper
+\NewDocumentCommand{\lsConditionalSetupForPaper}{O{localbibliography.bib}}
+  {%
+    \ifbool{lsImportPackagesWhenStandalone}
+           {\input{localpackages.tex}
+            \input{localhyphenation.tex}
+            \input{localcommands.tex}
+            \addbibresource{#1}}
+           {}
+  }
 
 
 %writeout page numbers for separation of chapters
