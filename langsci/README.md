@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Project: langsci
 %% Author: Language Science Press (http://langsci-press.org)
-%% Date: 2023-02-10 11:11:11 UTC
+%% Date: 2024-02-08 11:11:11 UTC
 %% Purpose: publishing boks with Language Science Press.
 %% Languages: LaTeX, tikz, eps
 %% Copyright 2012- Language Science Press

@@ -346,7 +346,7 @@
 \providecommand{\lsptoprule}{\midrule\toprule}
 \providecommand{\lspbottomrule}{\bottomrule\midrule}
 
-\providecommand{\REF}[1]{(\ref{#1})}
+\providecommand{\REF}[2][]{(\ref{#2#1})}
 
 
 \newcommand{\glottocodes}[1]{}
@@ -357,12 +357,6 @@
 \providecommand{\op}{{\upshape (}} %opening paren
 \providecommand{\cp}{{\upshape )}} %closing paren
 \providecommand{\db}{\hphantom{[}} %dummy space for [ in IMT line
-
-% old font commands
-\renewcommand{\it}{\itshape}
-\renewcommand{\bf}{\bfseries}
-\renewcommand{\sc}{\scshape}
-\renewcommand{\rm}{\upshape}
 
 % Shortcuts to langsci-affiliation styles
 % These commands allow switching between two frequently used output styles

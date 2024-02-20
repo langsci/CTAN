@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%      
 %%      File: langscibook.cls
 %%    Author: Language Science Press (http://langsci-press.org)
-%%      Date: 2023-02-08 14:00 CET
+%%      Date: 2024-02-07 14:00 CET
 %%   Purpose: This file defines the basic document class
 %%            for books published with Language Science Press.
 %%  Language: LaTeX
@@ -49,7 +49,7 @@
 %   \- Miscellaneous
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{langscibook}[2023/02/08 Language Science Press]
+\ProvidesClass{langscibook}[2024/02/07 Language Science Press]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %    Early load packages
@@ -109,12 +109,14 @@
 \newcommand{\newlineCover}{\\}  % \newline only on cover
 \newcommand{\newlineSpine}{\\}  % \newline only on spine
 \newcommand{\newlineTOC}{\\}    % \newline only in TOC entry
-\newcommand{\affiliation}[1]{}     % A dummy command to process the affiliation info.
+\newcommand{\affiliation}[1]{}  % A dummy command to process the affiliation info.
+\newcommand{\orcid}[1]{}        % A dummy command to process ORCiDs.
 
 \newcommand{\lsSpineTitle}{\@title}
 \newcommand{\lsSpineAuthor}
   {%
     \ResolveAffiliations[output affiliation=false, 
+                         orcid placement=none,
                          output authors font=\lsSpineAuthorFont]{\@author}%
   }
 \newcommand{\SpineTitle}[1]{\renewcommand{\lsSpineTitle}{#1}}
@@ -139,19 +141,16 @@
 \newbool{babelshorthands}
 \newbool{multiauthors}
 \newbool{showindex}
-\newbool{biblatex}
-    \booltrue{biblatex}
-\newbool{newtxmath}
 \newbool{minimal}
 \newbool{collection}
 \newbool{collectiontoclong}
 \newbool{uniformtopskip}
 \newbool{oldstylenumbers}
-\newbool{tblseight}%for chinesefonts in tbls series page
 \newbool{lsISBNTwoDigitAddon}
 \newbool{lsFloatCounterWithoutChapter}
     \booltrue{lsFloatCounterWithoutChapter}
 \newbool{lsImportPackagesWhenStandalone}
+\newbool{lsSpineWidthUserConfigured}
 \newbool{infn}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -174,7 +173,8 @@
 		\renewcommand{\lsBiblatexBackend}{#1}}
 \DeclareStringOption{spinewidth}[20mm]
 	\define@key{langscibook}{spinewidth}{%
-		\renewcommand{\lsSpinewidth}{#1}}
+		\renewcommand{\lsSpinewidth}{#1}%
+		\booltrue{lsSpineWidthUserConfigured}}
 \DeclareVoidOption{smallfont}{\renewcommand{\lsFontsize}{10pt}}
 \DeclareVoidOption{decapbib}{
         \booltrue{resetcapitals}
@@ -192,9 +192,6 @@
 \DeclareVoidOption{babelshorthands}{\booltrue{babelshorthands}}
 \DeclareVoidOption{multiauthors}{\booltrue{multiauthors}}
 \DeclareVoidOption{showindex}{\booltrue{showindex}}
-\DeclareVoidOption{biblatex}{\booltrue{biblatex}}
-\DeclareVoidOption{nonewtxmath}{\boolfalse{newtxmath}}
-\DeclareVoidOption{newtxmath}{\booltrue{newtxmath}}
 \DeclareVoidOption{minimal}{\booltrue{minimal}}
 \DeclareVoidOption{collection}{\booltrue{collection}}
 \DeclareVoidOption{proofs}
@@ -275,7 +272,6 @@
 	\AdditionalFontImprint{Estrangelo Edessa}
   }
 
-\DeclareVoidOption{tblseight}{\booltrue{tblseight}}
 \DeclareVoidOption{infn}{\booltrue{infn}}
 
 \ProcessKeyvalOptions*
@@ -452,6 +448,7 @@
             \lsEditorPrefix%
             \ResolveAffiliations[output in groups=false, 
                                  output affiliation=false, 
+                                 orcid placement=none,
                                  output authors font=\lsCoverAuthorFont,
                                  separator between two=\\,
                                  separator between multiple=\\,
@@ -472,6 +469,7 @@
             \lsEditorPrefix%
             \ResolveAffiliations[output in groups=false, 
                                  output affiliation=false, 
+                                 orcid placement=none,
                                  output authors font=\lsCoverAuthorFont,
                                  separator between two=\\,
                                  separator between multiple=\\,
@@ -625,6 +623,9 @@
         \ifx\lsSeries\eotms
         \renewcommand{\sectref}[1]{Section~\ref{#1}}
         \fi
+        \ifx\lsSeries\ahl
+        \renewcommand{\sectref}[1]{Section~\ref{#1}}
+        \fi
     } %% \AtBeginDocument
 }{} %notbool paper
 
@@ -644,6 +645,40 @@
 \newlength{\totalheight}
 \setlength{\bleed}{3.175mm}
 \setlength{\spinewidth}{\lsSpinewidth} % Create Space Version
+\ExplSyntaxOn
+% Integers and floats needed for automatic spine width calculation (BoD).
+\int_new:N \l__langsci_bookblock_page_count
+\int_new:N \l_langsci_spine_width_modifier
+\fp_new:N \l__langsci_spine_width
+
+\NewExpandableDocumentCommand{\lsDetermineSpineWidth}{O{Bookblock.pdf} m}
+  {% Collect the page count from input file.
+    \int_set:Nn \l__langsci_bookblock_page_count
+    {\the\XeTeXpdfpagecount"#1"}
+    
+    \str_case:nn {#2}
+      {
+      	{hardcover} % Determine hardcover spine dimensions with 90g white paper
+      	  {
+        	\int_compare:nTF 
+		      { \l__langsci_bookblock_page_count < 300 }
+		      { \int_set:Nn \l_langsci_spine_width_modifier {5} } 
+		      { \int_set:Nn \l_langsci_spine_width_modifier {6} }
+      	  }
+      	{softcover} % Determine softcover spine dimensions with 90g white paper
+      	  {
+        	\int_set:Nn \l_langsci_spine_width_modifier {0}
+      	  }
+      }
+     
+   	\fp_set:Nn \l__langsci_spine_width
+   	  {
+  	    \l__langsci_bookblock_page_count / 2 * 0.12
+  	    + \l_langsci_spine_width_modifier
+   	  }
+    \setlength{\spinewidth}{\fp_use:N \l__langsci_spine_width mm}
+  }
+\ExplSyntaxOff
 \usepackage{calc}
 
 \ifbool{coverCS}{
@@ -655,13 +690,19 @@
 \ifbool{coverBODhc}{
   \booltrue{cover}
   \usepackage{langsci-pod}
-  \bodhcgeometry
+  \ifbool{lsSpineWidthUserConfigured}
+         {}
+         {\lsDetermineSpineWidth{hardcover}}
+  \bodhcgeometry{}
 }{}
 
 \ifbool{coverBODsc}{
   \booltrue{cover}
   \usepackage{langsci-pod}
-  \bodscgeometry
+    \ifbool{lsSpineWidthUserConfigured}
+         {}
+         {\lsDetermineSpineWidth{softcover}}
+  \bodscgeometry{}
 }{}
 
 %Page size and text area if not cover
@@ -690,7 +731,6 @@
 \usepackage{amsmath} % has to be loaded before mathspec/unicode-math
 
 \notbool{minimal}{% The minimal mode skips font loading
-    \notbool{newtxmath}{
     %% There is a known problem in the interplay between \binom, unicode-math, and OTF
     %% https://tex.stackexchange.com/questions/269980/wrong-parentheses-size-in-binom-with-xelatex-and-unicode-math-in-displaystyle
     \ifx\Umathcode\@undefined\else
@@ -716,10 +756,6 @@
     \fi%umathcode
     %% Provides \setmathfont
     \usepackage{unicode-math}
-    }{%else newtxmath
-    %% Deprecated:
-    \PassOptionsToPackage{no-math}{fontspec} % must appear before metalogo or any fontspec stuff; deactivates fontspec's math settings, which is necessary to let newtxmath do the job
-    }
 
     \usepackage{metalogo}\newcommand{\xelatex}{\XeLaTeX\xspace}
 
@@ -738,12 +774,10 @@
     ItalicFont = Arimo-Italic.ttf,
     BoldItalicFont = Arimo-BoldItalic.ttf
     ]{Arimo-Regular.ttf}
-
-    \notbool{newtxmath}{
+    
     \setmathfont[AutoFakeBold]{LibertinusMath-Regular.otf}
     \setmathfont[range={cal},StylisticSet=1]{XITSMath-Regular.otf}
     \setmathfont[range={bfcal},StylisticSet=1]{XITSMath-Bold.otf}
-    }{}
 
     \ifbool{oldstylenumbers}{
     \defaultfontfeatures[LibertinusSerif-Semibold.otf,LibertinusSerif-Italic.otf,LibertinusSerif-SemiboldItalic.otf,LibertinusSerif-Regular.otf]{SmallCapsFeatures={Numbers=OldStyle}}
@@ -764,26 +798,11 @@
       ]
       {LibertinusSerif-Regular.otf}
 
-    %% Deprecated:
-    \ifbool{newtxmath}{
-            \usepackage[libertine]{newtxmath}
-            %% following http://tex.stackexchange.com/questions/297328/xelatex-does-not-load-newtxmath-with-linuxlibertine-sometimes
-            %% due to a bug in XeTeX. This also seems to fix an issue with \url in footnotes.
-    %% Unfortunately, this is NOT extensively tested!
-            \usepackage{xpatch}
-            \xpretocmd{\textsuperscript}
-            {{\sbox0{$\textstyle x$}}}
-            {}{}
-            \AtBeginDocument{%
-            \DeclareSymbolFont{operators}{\encodingdefault}{\familydefault}{m}{n}%
-            \SetSymbolFont{operators}{bold}{\encodingdefault}{\familydefault}{b}{n}%
-            }
-    }{}
     % Improve the appearance of numbers in tables and the TOC 
     % In those places, they should come out monospaced, unlike in main text.
-    \AtBeginEnvironment{tabular}{\addfontfeatures{Numbers={Monospaced,Lining}}\selectfont}
-    \AtBeginEnvironment{tabularx}{\addfontfeatures{Numbers={Monospaced,Lining}}\selectfont}
-    \AtBeginEnvironment{longtable}{\addfontfeatures{Numbers={Monospaced,Lining}}\selectfont}
+    \AtBeginEnvironment{tabular}{\ifmmode\else\addfontfeatures{Numbers={Monospaced,Lining}}\selectfont\fi}
+    \AtBeginEnvironment{tabularx}{\ifmmode\else\addfontfeatures{Numbers={Monospaced,Lining}}\selectfont\fi}
+    \AtBeginEnvironment{longtable}{\ifmmode\else\addfontfeatures{Numbers={Monospaced,Lining}}\selectfont\fi}
     
     \DeclareTOCStyleEntry
       [  
@@ -806,6 +825,7 @@
     % In collected volumes, adjust the spacing for unnumbered chapters
     \ifbool{collection}{
     \BeforeStartingTOC[toc]{\SetupAffiliations{output affiliation=false,
+                                               orcid placement=none,
                                                output authors font=\normalfont,
                                                separator between two={~\&~},
                                                separator between multiple={,~},
@@ -927,6 +947,19 @@
         {\g__affiliations_num_authors_int} > {1}
         {\booltrue{multiauthors}} {}
   }
+  
+\NewDocumentCommand{\lsDeterminePaperAuthorAffiliationIndexing}{}
+  {%
+    \int_compare:nNnT
+        {\g__affiliations_num_authors_int} = {1}
+        {
+          \SetupAffiliations
+            {
+              mark~style = none, 
+              separator~between~affiliations={~\&~}
+            }
+        } 
+  }
 \ExplSyntaxOff
 
 \newcommand{\lsEditorPrefix}{}
@@ -1013,19 +1046,13 @@
 %    Series history
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newcommand{\tblseight}{{\color{red}Chinese fonts for TBLS 8 not loaded! Please set the option \textsc{tblseight} in main.tex for final production}}
-
-\ifbool{tblseight}
-  {
-    \newfontfamily\cn
-      [
-        Scale=MatchLowercase,
-        BoldFont=SourceHanSerifSC-Bold.otf
-      ]
-      {SourceHanSerifSC-Regular.otf}
-
-    \renewcommand{\tblseight}{{\cn 语法理论: 从转换语法到基于约束的理论}}
-  }{}
+% Load Chinese font for TBLS history display (from CTAN package "fandol")
+\AtEndPreamble
+  {%
+    \ifx\lsSeries\tbls
+      \newfontfamily{\lsSeriesHistoryFandolSong}{FandolSong-Regular.otf}
+    \fi
+  }
   
 \ExplSyntaxOn
 % A command to output a limited number of items on the series history page.
@@ -1437,12 +1464,12 @@ Storage and cataloguing done by \storageinstitution\\[3ex]
 \def\epigramsource#1{\gdef\@epigramsource{#1}}
 \epigramsource{}
 
-\usepackage{epigraph}
-\setlength{\epigraphrule}{0pt}
-\renewcommand{\textflush}{flushepinormal}
-\setlength{\epigraphwidth}{.618\textwidth}% Set to the longer part of golden ratio
-\setlength{\afterepigraphskip}{0\baselineskip}
-\setlength{\beforeepigraphskip}{0\baselineskip}
+% Apply settings to dictum from scrbook
+\setkomafont{dictum}{\normalfont\small}
+\setkomafont{dictumauthor}{\normalfont\small}
+\renewcommand*{\dictumauthorformat}[1]{#1}
+\renewcommand{\dictumwidth}{.618\textwidth} % longer part of golden ratio
+\renewcommand*{\dictumrule}{\smallskip\par}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %    Footnotes
@@ -1612,6 +1639,7 @@ Storage and cataloguing done by \storageinstitution\\[3ex]
 \usepackage{caption}
 \captionsetup{font={stretch=.8,small},width=.8\textwidth}
 \setcapindent{0pt}
+\AtBeginEnvironment{floatrow}{\captionsetup{margin=.05\linewidth}}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1861,9 +1889,6 @@ Storage and cataloguing done by \storageinstitution\\[3ex]
 }
 
 \ifbool{collection}{
-    \notbool{biblatex}{
-            \ClassError{langsci/langscibook}{Collection option not compatible with plain BibTeX. Please use biblatex option}{}
-    }{}
 
     \AtBeginDocument{% for the citation in the footer
             \renewcommand{\newlineCover}{}
@@ -1888,7 +1913,8 @@ Storage and cataloguing done by \storageinstitution\\[3ex]
       [
         pagenumberbox={\csname @gobble\endcsname},
         raggedentrytext=true,
-        linefill={\hfill}
+        linefill={\hfill},
+        dynnumwidth=true
       ]{tocline}{part}
 
     \usepackage{chngcntr}
@@ -1960,6 +1986,8 @@ Storage and cataloguing done by \storageinstitution\\[3ex]
         \renewcommand{\maketitle}{%
             % With \setchapterpreamble from scrbook, we ensure that the author(s)
             % and their affiliation(s) are part of the \chapter block.
+            \CountAuthorsFromAffiliations{\@author}
+            \lsDeterminePaperAuthorAffiliationIndexing{}
             \setchapterpreamble[u]{\ResolveAffiliations{\@author}\\}
             \chapter
             [tocentry={\titleToToC~\newline{\normalfont\ResolveAffiliations{\@author}}}]
@@ -1976,13 +2004,14 @@ Storage and cataloguing done by \storageinstitution\\[3ex]
                 \ifbool{draft}{Draft of \today, \currenttime}{}
                     }
             \ifx\@epigram\empty
-              \else {\epigraph{\@epigram\\[-2\baselineskip]}{\@epigramsource}
-                \epigram{}\epigramsource{}}
+                  \else \dictum[\@epigramsource]{\@epigram}%
+                        \epigram{}\epigramsource{}
             \fi
             \enlargethispage{-1\baselineskip}
         }
         \ohead{}
         \lehead{\ResolveAffiliations[output affiliation=false,
+                                     orcid placement=none,
                                      output authors font=\normalfont\slshape,
                                      separator between two={~\&~},
                                      separator between multiple={,~},
@@ -2140,7 +2169,7 @@ Storage and cataloguing done by \storageinstitution\\[3ex]
     \renewcommand{\lsReferencesTitle}{french}
     \ifbool{babel}{
         \renewcommand\frenchfigurename{Figure}
-        \renewcommand\frenchtablename{Table}
+        \renewcommand\frenchtablename{Tableau}
     }{}
 \fi
 
