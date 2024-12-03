@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Project: langsci
 %% Author: Language Science Press (http://langsci-press.org)
-%% Date: 2024-02-08 11:11:11 UTC
+%% Date: 2024-12-03 11:11:11 UTC
 %% Purpose: publishing boks with Language Science Press.
 %% Languages: LaTeX, tikz, eps
 %% Copyright 2012- Language Science Press
@@ -50,7 +50,7 @@ The main file is the file langscibook.cls. This defines the basic structure of t
 The following optional packages are also provided, but have to be included manually if desired:
 
     langsci-optional.sty: additional useful commands
-    langsci-gb4e.sty and langsci-cgloss.sty typeset linguistic examples
+    langsci-gb4e.sty: typeset linguistic examples
     langsci-lgr.sty: the Leipzig glossing rule definitions
     langsci-bidi.sty: bidirectional text
     langsci-tbls.sty: macros for the textbook series Textbooks in Language Sciences

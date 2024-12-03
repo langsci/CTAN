@@ -1,7 +1,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%      File: langsci-gb4e.sty
 %%    Author: Language Science Press (http://langsci-press.org)
-%%      Date: 2022-10-21
+%%      Date: 2024-12-03
 %%   Purpose: This file contains an adapted version of the gb4e package
 %%            for typetting linguistic examples. It also includes
 %%            adapted versions of the cgloss and jambox packages
@@ -9,17 +9,20 @@
 %%   Licence: The LaTeX Project Public License, Version 1.3c
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\ProvidesPackage{langsci-gb4e}[2022/10/21]
+\ProvidesPackage{langsci-gb4e}[2024/12/03]
 
 \usepackage{etoolbox}
 
 \newtoggle{cgloss}
 \toggletrue{cgloss}
+\DeclareOption{nocgloss}{\togglefalse{cgloss}}
 \newtoggle{jambox}
 \toggletrue{jambox}
-\newtoggle{gb4eLowerPenalty}
-\DeclareOption{nocgloss}{\togglefalse{cgloss}}
 \DeclareOption{nojambox}{\togglefalse{jambox}}
+\newtoggle{autoexewidth}
+\toggletrue{autoexewidth}
+\DeclareOption{manualexewidth}{\togglefalse{autoexewidth}}
+\newtoggle{gb4eLowerPenalty}
 \DeclareOption{lowerpenalty}{\toggletrue{gb4eLowerPenalty}}
 \DeclareOption*{\PackageWarning{langsci-gb4e}{Unknown option ‘\CurrentOption’}}
 \ProcessOptions\relax
@@ -242,10 +245,17 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \def\exe{%
+    \iftoggle{autoexewidth}{%
     %\ifnum\value{equation}>9 \exewidth{(23)}\else\fi%
     %inserted by LangSci, for large example numbers
-    \ifnum\value{equation}>998 \exewidth{(1235)}\else\ifnum\value{equation}>98 \exewidth{(235)}\fi\fi%
-    \@ifnextchar [{\@exe}{\@exe[\@exwidth]}}
+    \ifnum\value{equation}>998%
+       \exewidth{(1235)}%
+    \else\ifnum\value{equation}>98%
+       \exewidth{(235)}%
+    \fi\fi%
+    }{}%
+    \@ifnextchar [{\@exe}{\@exe[\@exwidth]}%
+}
 
 \def\@exe[#1]{\ifnum \@xnumdepth >0%
                  \if@xrec\@exrecwarn\fi%
